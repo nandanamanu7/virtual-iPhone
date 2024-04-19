@@ -5,6 +5,7 @@ public class InitialApp extends App {
 	}
 
 	public void updateScreen() {
+		
 	}
 	
 }

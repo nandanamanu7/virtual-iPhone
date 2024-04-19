@@ -1,4 +1,8 @@
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
@@ -20,13 +24,16 @@ public class MainFrame extends JFrame {
 	
 	// Set up array of AnimatedPanels for each screen along with int for the current screen
 	private AnimatedPanel[] screens;
+ 	private HomeScreenPanel homeScreenPanel = new HomeScreenPanel();
+ 	
 	private int currentPanel = 0;
-	
+ 	
+ 	
 	// Used to establish the animation speed
 	public static int delay = 10;
 	
 	public MainFrame(){
-		
+
 	}
 	
 	public void run() throws InterruptedException{
@@ -40,9 +47,12 @@ public class MainFrame extends JFrame {
 	 
 	 public void createFrame(Object semaphore) {
 		 this.setTitle("Virtual iPhone");
-		 this.setSize(HEIGHT,WIDTH);
+		 this.setSize(WIDTH,HEIGHT);
 		 this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		 
+	        homeScreenPanel.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
+	        homeScreenPanel.setBounds(0,0,SCREEN_WIDTH,SCREEN_HEIGHT);
+	        
 	     // Set the current frame and this JFrame to be visible
 	     this.setVisible(true);
 
@@ -51,16 +61,16 @@ public class MainFrame extends JFrame {
 	         semaphore.notify();
 	     }
 	 }
-	 
+
 	 private void showPanel(int index) {
 	        System.out.printf("Show Panel. Thread is: %s\n", Thread.currentThread().getName());
 
 	        // hide the current panel
-	        screens[currentPanel].setVisible(false);
+	        screens[SCREEN_PANEL].setVisible(false);
 
 	        // show the correct panel
 	        currentPanel = index;
-	        screens[currentPanel].setVisible(true);
+	        screens[SCREEN_PANEL].setVisible(true);
 
 	        // The animation will start on the main thread.
 	        // Do nothing in the UI thread
