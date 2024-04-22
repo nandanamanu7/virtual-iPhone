@@ -1,3 +1,4 @@
+import java.awt.Graphics;
 import java.awt.color.*;
 import javax.swing.JPanel;
 
@@ -11,5 +12,5 @@ public abstract class AnimatedPanel extends JPanel{
 	
 	// All child classes must implement this method
 	public abstract void updateAnimation();
-	
+
 }

@@ -12,9 +12,11 @@ public class MainFrame extends JFrame {
 	// To eliminate a warning showing in Eclipse
 	private static final long serialVersionUID = 1L;
 	
+	private static volatile boolean done = false;
+	
 	// To set bounds of the frame
-	public static final int WIDTH = 400;
-	public static final int HEIGHT = 800;
+	public static final int WIDTH = 250;
+	public static final int HEIGHT = 450;
 	public static final int SCREEN_WIDTH = 220;
 	public static final int SCREEN_HEIGHT = 350;
 	
@@ -24,8 +26,6 @@ public class MainFrame extends JFrame {
 	
 	// Set up array of AnimatedPanels for each screen along with int for the current screen
 	private AnimatedPanel[] screens;
- 	private HomeScreenPanel homeScreenPanel = new HomeScreenPanel();
- 	
 	private int currentPanel = 0;
  	
  	
@@ -33,7 +33,10 @@ public class MainFrame extends JFrame {
 	public static int delay = 10;
 	
 	public MainFrame(){
-
+		this.screens = new AnimatedPanel[1];
+		this.screens[SCREEN_PANEL] = new HomeScreenPanel();
+		//this.screens[TICTACTOE_PANEL] = new TicTacToePanel();
+		
 	}
 	
 	public void run() throws InterruptedException{
@@ -43,6 +46,9 @@ public class MainFrame extends JFrame {
         synchronized (theGUI ) {
             theGUI.wait();
         }
+        while(true) {
+        	theGUI.startAnimation();
+        }
 	}
 	 
 	 public void createFrame(Object semaphore) {
@@ -50,9 +56,14 @@ public class MainFrame extends JFrame {
 		 this.setSize(WIDTH,HEIGHT);
 		 this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		 
-	        homeScreenPanel.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
-	        homeScreenPanel.setBounds(0,0,SCREEN_WIDTH,SCREEN_HEIGHT);
-	        
+		 for (AnimatedPanel screen : screens) {
+	        screen.setBounds(0, 0, WIDTH, HEIGHT);
+	        add(screen);
+	        screen.setVisible(false);
+		 }
+		 
+		 this.currentPanel = SCREEN_PANEL;
+		 screens[currentPanel].setVisible(true);
 	     // Set the current frame and this JFrame to be visible
 	     this.setVisible(true);
 
@@ -64,16 +75,35 @@ public class MainFrame extends JFrame {
 
 	 private void showPanel(int index) {
 	        System.out.printf("Show Panel. Thread is: %s\n", Thread.currentThread().getName());
+	        
+	        MainFrame.done = true;
 
 	        // hide the current panel
-	        screens[SCREEN_PANEL].setVisible(false);
+	        screens[currentPanel].setVisible(false);
 
 	        // show the correct panel
 	        currentPanel = index;
-	        screens[SCREEN_PANEL].setVisible(true);
+	        screens[currentPanel].setVisible(true);
 
 	        // The animation will start on the main thread.
 	        // Do nothing in the UI thread
 	    }
+	 
+	 public void startAnimation() {
+		 
+		 MainFrame.done = false;
+		 try {
+			 while (!MainFrame.done) {
+				 screens[currentPanel].updateAnimation();
+				 
+				 repaint();
+				 
+				 Thread.sleep(MainFrame.delay);
+			 }
+		 } catch (InterruptedException e) {
+			 e.printStackTrace();
+		 }
+		 
+	 }
 	 
 }

@@ -1,3 +1,4 @@
+import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -22,9 +23,14 @@ public class HomeScreenPanel extends AnimatedPanel{
     }
 	
 	@Override
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		g.drawImage(homeScreenImage, 0, 0, this);
+	}
+	
+	@Override
 	public void updateAnimation() {
 		// TODO Auto-generated method stub
-		
 	}
 
 }
