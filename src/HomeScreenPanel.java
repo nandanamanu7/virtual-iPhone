@@ -6,31 +6,31 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 public class HomeScreenPanel extends AnimatedPanel{
-
-	private BufferedImage homeScreenImage;
+	
+	
+	private BufferedImage wallpaper;
 
 	public HomeScreenPanel() {
 		loadImages();
 	}
 	
 	private void loadImages() {
-        File imX = new File("src/Images/IPhone.png");
-        try {
-            this.homeScreenImage = ImageIO.read(imX);
-        } catch (IOException e) {
-            System.out.println(imX.getAbsolutePath());
-        }
+		 File imX = new File("src/Images/wallpaper01.png");
+	        try {
+	            this.wallpaper = ImageIO.read(imX);
+	        } catch (IOException e) {
+	            System.out.println(imX.getAbsolutePath());
+	        }
     }
 	
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		g.drawImage(homeScreenImage, 0, 0, this);
+		g.drawImage(wallpaper, SCREEN_DISTANCE_X, SCREEN_DISTANCE_Y, this);
 	}
 	
 	@Override
 	public void updateAnimation() {
-		// TODO Auto-generated method stub
 	}
 
 }

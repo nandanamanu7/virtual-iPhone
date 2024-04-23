@@ -3,6 +3,12 @@ import java.awt.color.*;
 import javax.swing.JPanel;
 
 public abstract class AnimatedPanel extends JPanel{
+	
+	public static final int SCREEN_WIDTH = 220;
+	public static final int SCREEN_HEIGHT = 335;
+	public static final int SCREEN_DISTANCE_X = 15;
+	public static final int SCREEN_DISTANCE_Y = 45;
+	
 	private static final long serialVersionUID = 1L;
 	
 	public AnimatedPanel() {
