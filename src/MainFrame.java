@@ -1,7 +1,6 @@
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
-import java.awt.Graphics;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
@@ -107,11 +106,10 @@ public class MainFrame extends JFrame {
 	    }
 	 
 	 public void startAnimation() {
-		 
 		 MainFrame.done = false;
 		 try {
 			 while (!MainFrame.done) {
-				 phoneFrame.updateAnimation();
+				 //phoneFrame.updateAnimation();
 				 screens[currentPanel].updateAnimation();
 				 
 				 repaint();
@@ -124,10 +122,5 @@ public class MainFrame extends JFrame {
 		 
 	 }
 	 
-	 @Override
-		public void paintComponent(Graphics g) {
-			super.paintComponent(g);
-			g.drawImage(wallpaper, 0, 0, this);
-		}
 	 
 }
