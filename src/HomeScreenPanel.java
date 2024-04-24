@@ -5,11 +5,12 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-public class HomeScreenPanel extends AnimatedPanel{
+public class HomeScreenPanel extends AnimatedPanel {
 	
 	
 	private BufferedImage wallpaper;
 
+	
 	public HomeScreenPanel() {
 		loadImages();
 	}
@@ -26,7 +27,7 @@ public class HomeScreenPanel extends AnimatedPanel{
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		g.drawImage(wallpaper, SCREEN_DISTANCE_X, SCREEN_DISTANCE_Y, this);
+		g.drawImage(wallpaper, 0, 0, this);
 	}
 	
 	@Override

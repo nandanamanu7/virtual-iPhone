@@ -1,4 +1,3 @@
-public abstract class App {
+public abstract class App extends PhoneFramePanel{
 	public abstract void doEvent();
-	public abstract void updateScreen();
-}
+	}

@@ -8,17 +8,66 @@ import javax.imageio.ImageIO;
 
 public class PhoneFramePanel extends AnimatedPanel{
 	
-	public static final int BAR_WIDTH = 220;
-	public static final int BAR_HEIGHT = 15;
-	public static final int BAR_DISTANCE_X = 15;
-	public static final int BAR_DISTANCE_Y = 30;
+	// To set bounds of the frame
+		public static final int SCREEN_WIDTH = 220;
+		public static final int SCREEN_HEIGHT = 335;
+		public static final int SCREEN_DISTANCE_X = 15;
+		public static final int SCREEN_DISTANCE_Y = 45;
+		public static final int BAR_WIDTH = 220;
+		public static final int BAR_HEIGHT = 15;
+		public static final int BAR_DISTANCE_X = 15;
+		public static final int BAR_DISTANCE_Y = 30;
+		
+		// Constants for each screen
+		private static final int SCREEN_PANEL = 0;
+		private static final int TICTACTOE_PANEL = 1;
+		
+		// Set up array of AnimatedPanels for each screen along with int for the current screen
+		private AnimatedPanel[] screens;
+		private int currentPanel = 0;
 	
 	// Images
 	private BufferedImage homeScreenImage;
 		
 	public PhoneFramePanel() {
+		this.setLayout(null);
+		this.screens = new AnimatedPanel[1];
+		HomeScreenPanel home = new HomeScreenPanel();
+		this.screens[SCREEN_PANEL] = home;
+		home.setBounds(SCREEN_DISTANCE_X, SCREEN_DISTANCE_Y, SCREEN_WIDTH, SCREEN_HEIGHT);
+		home.setVisible(true);
+		//this.screens[TICTACTOE_PANEL] = new TicTacToePanel();
 		loadImages();
+		createPanel();
 	}
+	
+	private void showPanel(int index) {
+        System.out.printf("Show Panel. Thread is: %s\n", Thread.currentThread().getName());
+
+        // hide the current panel
+        screens[currentPanel].setVisible(false);
+
+        // show the correct panel
+        currentPanel = index;
+        screens[currentPanel].setVisible(true);
+
+        // The animation will start on the main thread.
+        // Do nothing in the UI thread
+    }
+	
+	private void createPanel() {
+		for (AnimatedPanel screen : screens) {
+	        screen.setBounds(SCREEN_DISTANCE_X, SCREEN_DISTANCE_Y, SCREEN_WIDTH, SCREEN_HEIGHT);
+	        add(screen);
+	        screen.setVisible(false);
+		 }
+		this.currentPanel = SCREEN_PANEL;
+		 screens[currentPanel].setVisible(true);
+	     // Set the current frame and this JFrame to be visible
+	     //this.setVisible(true);
+	}
+	
+	
 	
 	private void loadImages() {
         File imX = new File("src/Images/IPhone.png");
@@ -39,7 +88,7 @@ public class PhoneFramePanel extends AnimatedPanel{
 	
 	@Override
 	public void updateAnimation() {
-		// TODO Auto-generated method stub
+		screens[currentPanel].updateAnimation();
 	}
 
 }

@@ -14,28 +14,9 @@ public class MainFrame extends JFrame {
 	
 	private static volatile boolean done = false;
 	
-	// Images
-	private BufferedImage homeScreenImage;
-	
 	// To set bounds of the frame
 	public static final int WIDTH = 250;
 	public static final int HEIGHT = 450;
-	public static final int SCREEN_WIDTH = 220;
-	public static final int SCREEN_HEIGHT = 335;
-	public static final int SCREEN_DISTANCE_X = 15;
-	public static final int SCREEN_DISTANCE_Y = 45;
-	public static final int BAR_WIDTH = 220;
-	public static final int BAR_HEIGHT = 15;
-	public static final int BAR_DISTANCE_X = 15;
-	public static final int BAR_DISTANCE_Y = 30;
-	
-	// Constants for each screen
-	private static final int SCREEN_PANEL = 0;
-	private static final int TICTACTOE_PANEL = 1;
-	
-	// Set up array of AnimatedPanels for each screen along with int for the current screen
-	private AnimatedPanel[] screens;
-	private int currentPanel = 0;
 	
 	// Creates Panel for Phone Frame
 	private AnimatedPanel phoneFrame;
@@ -44,9 +25,6 @@ public class MainFrame extends JFrame {
 	public static int delay = 10;
 	
 	public MainFrame(){
-		this.screens = new AnimatedPanel[1];
-		this.screens[SCREEN_PANEL] = new HomeScreenPanel();
-		//this.screens[TICTACTOE_PANEL] = new TicTacToePanel();
 		this.phoneFrame = new PhoneFramePanel();
 	}
 	
@@ -64,6 +42,7 @@ public class MainFrame extends JFrame {
 	}
 	 
 	 public void createFrame(Object semaphore) {
+		 this.setLayout(null);
 		 this.setTitle("Virtual iPhone");
 		 this.setSize(266,489);
 		 this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -71,17 +50,8 @@ public class MainFrame extends JFrame {
 		 this.phoneFrame.setBounds(0,0,WIDTH, HEIGHT);
 		 add(phoneFrame);
 		 phoneFrame.setVisible(true);
+		 this.setVisible(true);
 		 
-		 for (AnimatedPanel screen : screens) {
-	        screen.setBounds(SCREEN_DISTANCE_X, SCREEN_DISTANCE_Y, SCREEN_WIDTH, SCREEN_HEIGHT);
-	        add(screen);
-	        screen.setVisible(false);
-		 }
-		 
-		 this.currentPanel = SCREEN_PANEL;
-		 screens[currentPanel].setVisible(true);
-	     // Set the current frame and this JFrame to be visible
-	     this.setVisible(true);
 
 	     // tell the main thread that we are done creating our stuff
 	     synchronized (semaphore) {
@@ -94,23 +64,13 @@ public class MainFrame extends JFrame {
 	        
 	        MainFrame.done = true;
 
-	        // hide the current panel
-	        screens[currentPanel].setVisible(false);
-
-	        // show the correct panel
-	        currentPanel = index;
-	        screens[currentPanel].setVisible(true);
-
-	        // The animation will start on the main thread.
-	        // Do nothing in the UI thread
 	    }
 	 
 	 public void startAnimation() {
 		 MainFrame.done = false;
 		 try {
 			 while (!MainFrame.done) {
-				 //phoneFrame.updateAnimation();
-				 screens[currentPanel].updateAnimation();
+				 phoneFrame.updateAnimation();
 				 
 				 repaint();
 				 
