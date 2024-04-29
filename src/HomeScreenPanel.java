@@ -21,10 +21,10 @@ public class HomeScreenPanel extends AnimatedPanel{
 	}
 	
 	private void loadImages() {
-		 File im0 = new File("src/Images/wallpaper00.png");
-		 File im1 = new File("src/Images/wallpaper01.png");
-		 File im2 = new File("src/Images/wallpaper02.png");
-		 File im3 = new File("src/Images/wallpaper03.png");
+		 File im0 = new File("src/Images/HomeScreen/wallpaper00.png");
+		 File im1 = new File("src/Images/HomeScreen/wallpaper01.png");
+		 File im2 = new File("src/Images/HomeScreen/wallpaper02.png");
+		 File im3 = new File("src/Images/HomeScreen/wallpaper03.png");
 		 try {
 	            this.wallpapers[0] = ImageIO.read(im0);
 	            this.wallpapers[1] = ImageIO.read(im1);
