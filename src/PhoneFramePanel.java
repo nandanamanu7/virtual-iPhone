@@ -20,7 +20,7 @@ public class PhoneFramePanel extends AnimatedPanel{
 		
 		// Constants for each screen
 		private static final int SCREEN_PANEL = 0;
-		private static final int TICTACTOE_PANEL = 1;
+		private static final int WALLPAPER_PANEL = 1;
 		
 		// Set up array of AnimatedPanels for each screen along with int for the current screen
 		private AnimatedPanel[] screens;
@@ -31,11 +31,9 @@ public class PhoneFramePanel extends AnimatedPanel{
 		
 	public PhoneFramePanel() {
 		this.setLayout(null);
-		this.screens = new AnimatedPanel[1];
-		HomeScreenPanel home = new HomeScreenPanel();
-		this.screens[SCREEN_PANEL] = home;
-		home.setBounds(SCREEN_DISTANCE_X, SCREEN_DISTANCE_Y, SCREEN_WIDTH, SCREEN_HEIGHT);
-		home.setVisible(true);
+		this.screens = new AnimatedPanel[2];
+		this.screens[SCREEN_PANEL] = new HomeScreenPanel();
+		this.screens[WALLPAPER_PANEL] = new Wallpaper();
 		//this.screens[TICTACTOE_PANEL] = new TicTacToePanel();
 		loadImages();
 		createPanel();
@@ -54,6 +52,22 @@ public class PhoneFramePanel extends AnimatedPanel{
         // The animation will start on the main thread.
         // Do nothing in the UI thread
     }
+	
+	/**
+	 * Takes a homescreenpanel that has been put in a list of AnimatedPanels and returns it as a HomeScreenPanel
+	 * @param An AnimatedPanel that represents a HomeScreenPanel
+	 * @return A HomeScreenPanel
+	 */
+	private HomeScreenPanel getPanel(AnimatedPanel home) {
+		return (HomeScreenPanel) home;
+	}
+	/**
+	 * 
+	 * @param An integer that represents the wallpaper value
+	 */
+	private void setWallpaper(int i) {
+		getPanel(screens[SCREEN_PANEL]).setWallpaper(i);
+	}
 	
 	private void createPanel() {
 		for (AnimatedPanel screen : screens) {

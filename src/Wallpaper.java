@@ -14,8 +14,8 @@ public class Wallpaper extends AnimatedPanel{
 	private int currentWallpaper = 0;
 	
 	public Wallpaper() {
-		loadImages();
 		this.wallpapers = new BufferedImage[4];
+		loadImages();
 	} 
 	
 	

@@ -16,8 +16,9 @@ public class HomeScreenPanel extends AnimatedPanel{
 
 	
 	public HomeScreenPanel() {
-		loadImages();
 		this.wallpapers = new BufferedImage[4];
+		loadImages();
+		setWallpaper(currentWallpaper);
 	}
 	
 	private void loadImages() {
