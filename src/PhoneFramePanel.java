@@ -1,12 +1,14 @@
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-public class PhoneFramePanel extends AnimatedPanel{
+public class PhoneFramePanel extends AnimatedPanel implements MouseListener {
 	
 	// To set bounds of the frame
 		public static final int SCREEN_WIDTH = 220;
@@ -24,7 +26,10 @@ public class PhoneFramePanel extends AnimatedPanel{
 		
 		// Set up array of AnimatedPanels for each screen along with int for the current screen
 		private AnimatedPanel[] screens;
-		private int currentPanel = 0;
+		private int currentPanel = 1;
+		
+		// Boolean values to indicate whether an app is clicked on
+		private boolean appClicked; 
 	
 	// Images
 	private BufferedImage homeScreenImage;
@@ -37,6 +42,7 @@ public class PhoneFramePanel extends AnimatedPanel{
 		//this.screens[TICTACTOE_PANEL] = new TicTacToePanel();
 		loadImages();
 		createPanel();
+		this.appClicked = false;
 	}
 	
 	private void showPanel(int index) {
@@ -74,11 +80,14 @@ public class PhoneFramePanel extends AnimatedPanel{
 	        screen.setBounds(SCREEN_DISTANCE_X, SCREEN_DISTANCE_Y, SCREEN_WIDTH, SCREEN_HEIGHT);
 	        add(screen);
 	        screen.setVisible(false);
+	        screen.setOpaque(false);
 		 }
-		this.currentPanel = SCREEN_PANEL;
+		//this.currentPanel = SCREEN_PANEL;
 		 screens[currentPanel].setVisible(true);
+		 
 	     // Set the current frame and this JFrame to be visible
 	     //this.setVisible(true);
+		 this.addMouseListener(this);
 	}
 	
 	
@@ -103,6 +112,63 @@ public class PhoneFramePanel extends AnimatedPanel{
 	@Override
 	public void updateAnimation() {
 		screens[currentPanel].updateAnimation();
+	}
+	
+	public boolean insideHomeButton (int x, int y) {
+		double circle_x = 126.5;
+		double circle_y = 414.5;
+		double true_x = Math.pow(x - circle_x, 2);
+		double true_y = Math.pow(y - circle_y, 2);
+		double distance = Math.sqrt(true_x + true_y);
+		return distance <= 20.2;
+	}
+	
+	public boolean insideApp (int x, int y) {
+		return true;
+	}
+
+	public void switchApp(int panel) {
+		screens[currentPanel].setVisible(false);
+		this.currentPanel = panel;
+		screens[currentPanel].setVisible(true);
+	}
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		int x = e.getX();
+		int y = e.getY();
+		if (insideHomeButton(x, y)) {
+			this.appClicked = false;
+			switchApp(0);
+		} else {
+			//Change this line to for loop for every app
+			this.appClicked = true;
+			switchApp(1);
+		}
+	
+	}
+
+	
+	@Override
+	public void mousePressed(MouseEvent e) {
+
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
