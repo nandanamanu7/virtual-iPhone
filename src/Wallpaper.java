@@ -13,6 +13,14 @@ public class Wallpaper extends AnimatedPanel{
 	private BufferedImage[] wallpapers;
 	private int currentWallpaper = 0;
 	
+	private int xDistanceWall = 25;
+	private int imageXDistance = 64;
+	private int xDistanceApp = 40;
+	private int yDistanceWall = 60;
+	private int imageYDistance = 97;
+	private int yDistanceApp = 28;
+	
+	
 	public Wallpaper() {
 		this.wallpapers = new BufferedImage[4];
 		loadImages();
@@ -53,13 +61,36 @@ public class Wallpaper extends AnimatedPanel{
 		super.paintComponent(g);
 		g.drawImage(backgroundImage, 0, 0, this);
 		for (BufferedImage wallpaper : wallpapers) {
-			g.drawImage(wallpaper, 25+row*104, 60+col*125, this);
+			g.drawImage(wallpaper, xDistanceWall+row*(imageXDistance+xDistanceApp), yDistanceWall+col*(imageYDistance+yDistanceApp), this);
 			row ++;
 			if (row == 2) {
 				row = 0;
 				col = 1;
 			}
 		}
+	}
+
+
+	@Override
+	public void clickEvent(int x, int y) {
+		if (checkClick(x,y) != -1) {
+			this.backgroundImage = this.wallpapers[checkClick(x,y)];
+		}
+		
+	}
+
+
+	private int checkClick(int x, int y) {
+		int image = -1;
+		for (int i = yDistanceWall; i < SCREEN_HEIGHT; i+= (imageYDistance+yDistanceApp)) {
+			for (int j = xDistanceWall; j < SCREEN_WIDTH; j+= (imageXDistance+xDistanceApp)) {
+				image++;
+				if ((i < x && (i + imageXDistance) > x) && (j < y && (j + imageYDistance) > y)) {
+					return image;
+				}
+			}
+		}
+		return -1;
 	}
 
 }

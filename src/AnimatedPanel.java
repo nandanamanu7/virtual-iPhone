@@ -19,4 +19,7 @@ public abstract class AnimatedPanel extends JPanel{
 	// All child classes must implement this method
 	public abstract void updateAnimation();
 
+
+	
+	public abstract void clickEvent(int x, int y);
 }

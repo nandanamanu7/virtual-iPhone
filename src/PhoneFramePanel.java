@@ -24,9 +24,15 @@ public class PhoneFramePanel extends AnimatedPanel implements MouseListener {
 		private static final int SCREEN_PANEL = 0;
 		private static final int WALLPAPER_PANEL = 1;
 		
+		// constants for apps
+		private int xDistanceBetweenApps = 10;
+		private int yDistanceBetweenApps = 15;
+		private int xBoundApp = 60;
+		private int yBoundApp = 70;
+
 		// Set up array of AnimatedPanels for each screen along with int for the current screen
 		private AnimatedPanel[] screens;
-		private int currentPanel = 1;
+		private int currentPanel = 0;
 		
 		// Boolean values to indicate whether an app is clicked on
 		private boolean appClicked; 
@@ -123,9 +129,6 @@ public class PhoneFramePanel extends AnimatedPanel implements MouseListener {
 		return distance <= 20.2;
 	}
 	
-	public boolean insideApp (int x, int y) {
-		return true;
-	}
 
 	public void switchApp(int panel) {
 		screens[currentPanel].setVisible(false);
@@ -139,15 +142,32 @@ public class PhoneFramePanel extends AnimatedPanel implements MouseListener {
 		if (insideHomeButton(x, y)) {
 			this.appClicked = false;
 			switchApp(0);
-		} else {
-			//Change this line to for loop for every app
+		} 
+		else if (!(insideApps(x,y)== 0) && !appClicked) {
 			this.appClicked = true;
-			switchApp(1);
+			System.out.println("app clicked");
+			switchApp(insideApps(x,y));
+		} else {
+			screens[currentPanel].clickEvent(x, y);
+			return;
 		}
-	
 	}
 
 	
+	private int insideApps(int x, int y) {
+		int currentApp = 0;
+		for (int j = (yDistanceBetweenApps + SCREEN_DISTANCE_Y); j < SCREEN_HEIGHT ; j+=  (xBoundApp+xDistanceBetweenApps)) {
+			for (int i = (xDistanceBetweenApps + SCREEN_DISTANCE_X); i < SCREEN_WIDTH; i+= (xBoundApp+xDistanceBetweenApps)) {
+				currentApp++;
+				if ((i < x && (i + xBoundApp) > x) && (j < y && (j + yBoundApp) > y)) {
+					
+					return currentApp;
+				}
+			}
+		}
+		return 0;
+	}
+
 	@Override
 	public void mousePressed(MouseEvent e) {
 
@@ -167,6 +187,12 @@ public class PhoneFramePanel extends AnimatedPanel implements MouseListener {
 
 	@Override
 	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void clickEvent(int x, int y) {
 		// TODO Auto-generated method stub
 		
 	}

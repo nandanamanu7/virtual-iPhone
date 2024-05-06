@@ -93,4 +93,10 @@ public class HomeScreenPanel extends AnimatedPanel{
 	public void updateAnimation() {
 	}
 
+	@Override
+	public void clickEvent(int x, int y) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
