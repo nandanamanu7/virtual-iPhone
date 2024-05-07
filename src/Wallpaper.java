@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -56,13 +57,20 @@ public class Wallpaper extends AnimatedPanel{
 	
 	@Override
 	public void paintComponent(Graphics g) {
+		int count = 0;
 		int row = 0;
 		int col = 0;
 		super.paintComponent(g);
 		g.drawImage(backgroundImage, 0, 0, this);
 		for (BufferedImage wallpaper : wallpapers) {
+			if (count == currentWallpaper) {
+				g.setColor(Color.BLUE);
+				g.fillRect(xDistanceWall+row*(imageXDistance+xDistanceApp) - 5, yDistanceWall+col*(imageYDistance+yDistanceApp) - 5, imageXDistance + 10, imageYDistance + 10);
+			}
 			g.drawImage(wallpaper, xDistanceWall+row*(imageXDistance+xDistanceApp), yDistanceWall+col*(imageYDistance+yDistanceApp), this);
+			
 			row ++;
+			count ++;
 			if (row == 2) {
 				row = 0;
 				col = 1;
@@ -74,7 +82,7 @@ public class Wallpaper extends AnimatedPanel{
 	@Override
 	public void clickEvent(int x, int y) {
 		if (checkClick(x,y) != -1) {
-			this.backgroundImage = this.wallpapers[checkClick(x,y)];
+			this.currentWallpaper = checkClick(x,y);
 		}
 		
 	}
@@ -85,12 +93,17 @@ public class Wallpaper extends AnimatedPanel{
 		for (int i = yDistanceWall; i < SCREEN_HEIGHT; i+= (imageYDistance+yDistanceApp)) {
 			for (int j = xDistanceWall; j < SCREEN_WIDTH; j+= (imageXDistance+xDistanceApp)) {
 				image++;
-				if ((i < x && (i + imageXDistance) > x) && (j < y && (j + imageYDistance) > y)) {
+				if ((j < x && x < (j + imageXDistance)) && (i < y && y < (i + imageYDistance))) {
 					return image;
 				}
 			}
 		}
 		return -1;
+	}
+
+
+	public int getWallpaper() {
+		return this.currentWallpaper;
 	}
 
 }

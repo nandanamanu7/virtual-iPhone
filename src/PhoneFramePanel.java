@@ -140,6 +140,9 @@ public class PhoneFramePanel extends AnimatedPanel implements MouseListener {
 		int x = e.getX();
 		int y = e.getY();
 		if (insideHomeButton(x, y)) {
+			if (appClicked) {
+				changeScreen(currentPanel);
+			}
 			this.appClicked = false;
 			switchApp(0);
 		} 
@@ -154,6 +157,15 @@ public class PhoneFramePanel extends AnimatedPanel implements MouseListener {
 	}
 
 	
+	private void changeScreen(int currentPanel) {
+		if(currentPanel == WALLPAPER_PANEL) {
+			Wallpaper object = (Wallpaper) screens[WALLPAPER_PANEL];
+			HomeScreenPanel home = (HomeScreenPanel) screens[SCREEN_PANEL];
+			home.setWallpaper(object.getWallpaper());
+		}
+		
+	}
+
 	private int insideApps(int x, int y) {
 		int currentApp = 0;
 		for (int j = (yDistanceBetweenApps + SCREEN_DISTANCE_Y); j < SCREEN_HEIGHT ; j+=  (xBoundApp+xDistanceBetweenApps)) {
@@ -196,5 +208,6 @@ public class PhoneFramePanel extends AnimatedPanel implements MouseListener {
 		// TODO Auto-generated method stub
 		
 	}
+
 
 }

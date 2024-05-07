@@ -22,4 +22,5 @@ public abstract class AnimatedPanel extends JPanel{
 
 	
 	public abstract void clickEvent(int x, int y);
+	
 }
