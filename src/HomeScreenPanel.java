@@ -33,8 +33,8 @@ public class HomeScreenPanel extends AnimatedPanel{
 		 File im2 = new File("src/Images/HomeScreen/wallpaper02.png");
 		 File im3 = new File("src/Images/HomeScreen/wallpaper03.png");
 		 File imWallpaperApp = new File("src/Images/HomeScreen/WallpaperApp.png");
-		 File imSettingsApp = new File("src/Images/HomeScreen/SettingsApp.png");
 		 File imNotesApp = new File("src/Images/HomeScreen/NotesApp.png");
+		 File imSettingsApp = new File("src/Images/HomeScreen/SettingsApp.png");
 		 File imClockApp = new File("src/Images/HomeScreen/ClockApp.png");
 		 File imHangManApp = new File("src/Images/HomeScreen/HangManApp.png");
 		 File imMusicApp = new File("src/Images/HomeScreen/MusicApp.png");
@@ -45,8 +45,8 @@ public class HomeScreenPanel extends AnimatedPanel{
 	            this.wallpapers[2] = ImageIO.read(im2);
 	            this.wallpapers[3] = ImageIO.read(im3);
 	            this.apps[0] = ImageIO.read(imWallpaperApp);
-	            this.apps[1] = ImageIO.read(imSettingsApp);
-	            this.apps[2] = ImageIO.read(imNotesApp);
+	            this.apps[1] = ImageIO.read(imNotesApp);
+	            this.apps[2] = ImageIO.read(imSettingsApp);
 	            this.apps[3] = ImageIO.read(imClockApp);
 	            this.apps[4] = ImageIO.read(imHangManApp);
 	            this.apps[5] = ImageIO.read(imMusicApp);
@@ -57,8 +57,8 @@ public class HomeScreenPanel extends AnimatedPanel{
 	            System.out.println(im2.getAbsolutePath());
 	            System.out.println(im3.getAbsolutePath());
 	            System.out.println(imWallpaperApp.getAbsolutePath());
-	            System.out.println(imSettingsApp.getAbsolutePath());
 	            System.out.println(imNotesApp.getAbsolutePath());
+	            System.out.println(imSettingsApp.getAbsolutePath());
 	            System.out.println(imClockApp.getAbsolutePath());
 	            System.out.println(imHangManApp.getAbsolutePath());
 	            System.out.println(imMusicApp.getAbsolutePath());

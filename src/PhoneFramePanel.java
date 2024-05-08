@@ -1,7 +1,6 @@
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -23,6 +22,7 @@ public class PhoneFramePanel extends AnimatedPanel implements MouseListener {
 		// Constants for each screen
 		private static final int SCREEN_PANEL = 0;
 		private static final int WALLPAPER_PANEL = 1;
+		private static final int NOTES_PANEL = 2;
 		
 		// constants for apps
 		private int xDistanceBetweenApps = 10;
@@ -42,9 +42,10 @@ public class PhoneFramePanel extends AnimatedPanel implements MouseListener {
 		
 	public PhoneFramePanel() {
 		this.setLayout(null);
-		this.screens = new AnimatedPanel[2];
+		this.screens = new AnimatedPanel[3];
 		this.screens[SCREEN_PANEL] = new HomeScreenPanel();
 		this.screens[WALLPAPER_PANEL] = new Wallpaper();
+		this.screens[NOTES_PANEL] = new NotesAppPanel();
 		//this.screens[TICTACTOE_PANEL] = new TicTacToePanel();
 		loadImages();
 		createPanel();
@@ -119,7 +120,7 @@ public class PhoneFramePanel extends AnimatedPanel implements MouseListener {
 	public void updateAnimation() {
 		screens[currentPanel].updateAnimation();
 	}
-	
+
 	public boolean insideHomeButton (int x, int y) {
 		double circle_x = 126.5;
 		double circle_y = 414.5;
