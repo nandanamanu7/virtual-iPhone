@@ -152,6 +152,8 @@ public class PhoneFramePanel extends AnimatedPanel implements MouseListener {
 			System.out.println("app clicked");
 			switchApp(insideApps(x,y));
 		} else {
+			x -= SCREEN_DISTANCE_X;
+			y -= SCREEN_DISTANCE_Y;
 			screens[currentPanel].clickEvent(x, y);
 			return;
 		}

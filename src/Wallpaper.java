@@ -103,8 +103,8 @@ public class Wallpaper extends AnimatedPanel{
 	
 	private int checkClick(int x, int y) {
 	    int count = 0;
-	    for (int row = 0; row < 2; row++) {
-	        for (int col = 0; col < 2; col++) {
+	    for (int col = 0; col < 2; col++) {
+	        for (int row = 0; row < 2; row++) {
 	            int leftX = xDistanceWall + row * (imageXDistance + xDistanceApp);
 	            int rightX = leftX + imageXDistance;
 	            int topY = yDistanceWall + col * (imageYDistance + yDistanceApp);
@@ -118,7 +118,6 @@ public class Wallpaper extends AnimatedPanel{
 	    }
 	    return -1;
 	}
-
 
 	public int getWallpaper() {
 		return this.currentWallpaper;
