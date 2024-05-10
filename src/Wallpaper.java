@@ -102,24 +102,24 @@ public class Wallpaper extends AnimatedPanel{
 	} */
 	
 	private int checkClick(int x, int y) {
-		int count = 0;
-		int row = 0;
-		int col = 0;
-		for (BufferedImage wallpaper : wallpapers) {
-			if ((xDistanceWall+row*(imageXDistance+xDistanceApp) < x) && ( x < (xDistanceWall+row*(imageXDistance+xDistanceApp) + imageXDistance))) {
-				if (((yDistanceWall+col*(imageYDistance+yDistanceApp)) < x) && (x < (yDistanceWall+col*(imageYDistance+yDistanceApp) + imageYDistance))) {
-					return count;
-				}
-			}
-			
-			row ++;
-			count ++;
-			if (row == 2) {
-				row = 0;
-				col = 1;
-			}
-		}
-		return -1;
+    		int count = 0;
+    		int row = 0;
+    		int col = 0;
+    		for (BufferedImage wallpaper : wallpapers) {
+        		if ((xDistanceWall + row * (imageXDistance + xDistanceApp) < x) && (x < (xDistanceWall + row * (imageXDistance + xDistanceApp) + imageXDistance))) {
+            			if (((yDistanceWall + col * (imageYDistance + yDistanceApp)) < y) && (y < (yDistanceWall + col * (imageYDistance + yDistanceApp) + imageYDistance))) {
+                			return count;
+            			}
+        		}
+        
+        		row++;
+        		count++;
+        		if (row == 2) {
+            		row = 0;
+		        col = 1;
+        		}
+    		}
+    		return -1;
 	}
 
 
