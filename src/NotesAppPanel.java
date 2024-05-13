@@ -6,6 +6,8 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.*;
+import java.time.*;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -16,6 +18,8 @@ public class NotesAppPanel extends AnimatedPanel implements ActionListener {
 	// GUI Components
 	private JTextField userInput;
 	private JButton saveButton;
+	private JButton accessButton;
+	private Clock systemClock;
 	
 	private int textFieldDistanceFromX = 20;
 	private int textFieldDistanceFromY = 50;
@@ -54,7 +58,7 @@ public class NotesAppPanel extends AnimatedPanel implements ActionListener {
 
 
 	public void loadTextField () {
-		this.userInput = new JTextField(20);
+		this.userInput = new JTextField(getDate(), 20);
 		this.userInput.addActionListener(this);
 		
 		// Learned about GridBagConstraints on Stack Overflow, allows us to set bounds and position for JTextField with ease
@@ -69,9 +73,12 @@ public class NotesAppPanel extends AnimatedPanel implements ActionListener {
 	
 	private void loadButtons() {
 		// TODO Auto-generated method stub
-		this.saveButton = new JButton(); 
-		this.userInput.addActionListener(this);
+		this.saveButton = new JButton("Save Note");                                     
+		this.saveButton.addActionListener(this);
 	    add(this.saveButton);
+	    this.accessButton = new JButton("Access old notes");                                     
+		this.accessButton.addActionListener(this);
+	    add(this.accessButton);
 	}
 
 
@@ -81,9 +88,23 @@ public class NotesAppPanel extends AnimatedPanel implements ActionListener {
 		
 	}
 
+	public String getDate() {
+		this.systemClock = Clock.systemDefaultZone();
+		String currentDate = ("" + systemClock.instant()).substring(0,10);
+		return currentDate;
+	}
+	
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		 String text = userInput.getText();
+		if (e.getSource() == saveButton) {
+			 String text = userInput.getText();
+			 System.out.println(text);
+		}
+		if (e.getSource() == accessButton) {
+			String accessDate = JOptionPane.showInputDialog("Note Date");
+			JOptionPane.showMessageDialog(accessButton, accessDate);
+		}
 	}
 	
 }
