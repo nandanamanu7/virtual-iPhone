@@ -16,15 +16,15 @@ public class NotesAppPanel extends AnimatedPanel implements ActionListener {
 	private BufferedImage backgroundImage;
 	
 	// GUI Components
-	private JTextField userInput;
+	private JTextArea userInput;
 	private JButton saveButton;
 	private JButton accessButton;
 	private Clock systemClock;
 	
 	private int textFieldDistanceFromX = 20;
-	private int textFieldDistanceFromY = 50;
+	private int textFieldDistanceFromY = 100;
 	private int textFieldXBound = 100;
-	private int textFieldYBound = 200;
+	private int textFieldYBound = 180;
 	
 	public NotesAppPanel() {
 		// Creates a new GridBagLayout so we can manage the layout/position of our JTextField
@@ -36,7 +36,7 @@ public class NotesAppPanel extends AnimatedPanel implements ActionListener {
 	} 
 
 	public void loadImages() {
-		File background = new File("src/Images/NotesApp/background.png");
+		 File background = new File("src/Images/NotesApp/background.png");
 		 try {
 	            this.backgroundImage = ImageIO.read(background);
 	      } catch (IOException e) {
@@ -58,17 +58,11 @@ public class NotesAppPanel extends AnimatedPanel implements ActionListener {
 
 
 	public void loadTextField () {
-		this.userInput = new JTextField(getDate(), 20);
-		this.userInput.addActionListener(this);
-		
-		// Learned about GridBagConstraints on Stack Overflow, allows us to set bounds and position for JTextField with ease
-		GridBagConstraints c = new GridBagConstraints();
-	    //c.gridwidth = GridBagConstraints.REMAINDER;
-	    
-	    // Sets insets or position and bounds of JTextField
-	    c.insets = new Insets(this.textFieldDistanceFromX, this.textFieldDistanceFromY, this.textFieldXBound, this.textFieldYBound);
-	    //c.fill = GridBagConstraints.HORIZONTAL;
-	    add(this.userInput, c);
+		this.userInput = new JTextArea();
+		this.userInput.setBounds(textFieldDistanceFromX, textFieldDistanceFromY, textFieldXBound, textFieldYBound);
+		this.userInput.setSize(new Dimension(textFieldXBound, textFieldYBound));
+		this.userInput.setLineWrap(true);
+		//this.userInput.addActionListener(this);
 	}
 	
 	private void loadButtons() {
@@ -99,6 +93,7 @@ public class NotesAppPanel extends AnimatedPanel implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == saveButton) {
 			 String text = userInput.getText();
+			// File newTextFile = new File()
 			 System.out.println(text);
 		}
 		if (e.getSource() == accessButton) {
