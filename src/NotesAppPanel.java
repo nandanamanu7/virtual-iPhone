@@ -11,25 +11,38 @@ import java.time.*;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.text.SimpleAttributeSet;
 
 public class NotesAppPanel extends AnimatedPanel implements ActionListener {
 	private BufferedImage backgroundImage;
 	
 	// GUI Components
-	private JTextArea userInput;
+	private JTextPane userInput;
 	private JButton saveButton;
 	private JButton accessButton;
 	private Clock systemClock;
 	
-	private int textFieldDistanceFromX = 20;
-	private int textFieldDistanceFromY = 100;
-	private int textFieldXBound = 100;
-	private int textFieldYBound = 180;
+	private int textFieldDistanceFromX = 50;
+	private int textFieldDistanceFromY = 50;
+	private int textFieldXBound = 200;
+	private int textFieldYBound = 150;
+
+	private String textFont = "serif";
+	private int fontSize = 20;
+	private int fontFormat = 0;
+
+	// Format Buttons
+	private JButton italicsFormatButton;
+	private JButton boldFormatButton;
+
+	// Boolean values for font format
+	private boolean italics;
+	private boolean bold;
+	
 	
 	public NotesAppPanel() {
 		// Creates a new GridBagLayout so we can manage the layout/position of our JTextField
 		new GridBagLayout();
-
 		loadImages();
 		loadTextField();
 		loadButtons();
@@ -58,11 +71,34 @@ public class NotesAppPanel extends AnimatedPanel implements ActionListener {
 
 
 	public void loadTextField () {
-		this.userInput = new JTextArea();
+		italics = false;
+		bold = false;
+		this.userInput = new JTextPane();
+		userInput.setBackground(Color.PINK);
+	    Font font = new Font(this.textFont, this.fontFormat, this.fontSize);
+	    userInput.setFont(font);
 		this.userInput.setBounds(textFieldDistanceFromX, textFieldDistanceFromY, textFieldXBound, textFieldYBound);
-		this.userInput.setSize(new Dimension(textFieldXBound, textFieldYBound));
-		this.userInput.setLineWrap(true);
-		//this.userInput.addActionListener(this);
+		this.userInput.setPreferredSize(new Dimension(textFieldXBound, textFieldYBound));
+		add(this.userInput);
+	}
+	
+	public void updateUserInput() {
+		System.out.println("called");
+		if (this.italics) {
+			this.fontFormat = Font.ITALIC;
+			italicsFormatButton.setBackground(Color.PINK);
+		}
+		if (this.bold) {
+			this.fontFormat = Font.BOLD;
+			boldFormatButton.setBackground(Color.PINK);
+		}
+		else {
+			this.fontFormat = 0;
+			italicsFormatButton.setBackground(Color.WHITE);
+			boldFormatButton.setBackground(Color.WHITE);
+		}
+		Font font = new Font(this.textFont, this.fontFormat, this.fontSize);
+	    userInput.setFont(font);
 	}
 	
 	private void loadButtons() {
@@ -73,6 +109,12 @@ public class NotesAppPanel extends AnimatedPanel implements ActionListener {
 	    this.accessButton = new JButton("Access old notes");                                     
 		this.accessButton.addActionListener(this);
 	    add(this.accessButton);
+	    this.italicsFormatButton = new JButton("Italics");                                     
+		this.italicsFormatButton.addActionListener(this);
+	    add(this.italicsFormatButton);
+	    this.boldFormatButton = new JButton("Bold");                                     
+		this.boldFormatButton.addActionListener(this);
+	    add(this.boldFormatButton);
 	}
 
 
@@ -99,6 +141,21 @@ public class NotesAppPanel extends AnimatedPanel implements ActionListener {
 		if (e.getSource() == accessButton) {
 			String accessDate = JOptionPane.showInputDialog("Note Date");
 			JOptionPane.showMessageDialog(accessButton, accessDate);
+		}
+		if (e.getSource() == italicsFormatButton) {
+			this.italics = !this.italics;
+			if (this.italics) {
+				italicsFormatButton.setBackground(Color.PINK);
+			}
+			updateUserInput();
+		}
+		if (e.getSource() == boldFormatButton) {
+			System.out.println("btn clicked");
+			this.bold = !this.bold;
+			if (this.bold) {
+				boldFormatButton.setBackground(Color.PINK);
+			}
+			updateUserInput();
 		}
 	}
 	
