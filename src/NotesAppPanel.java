@@ -71,8 +71,8 @@ public class NotesAppPanel extends AnimatedPanel implements ActionListener {
 
 
 	public void loadTextField () {
-		italics = false;
-		bold = false;
+		this.italics = false;
+		this.bold = false;
 		this.userInput = new JTextPane();
 		userInput.setBackground(Color.PINK);
 	    Font font = new Font(this.textFont, this.fontFormat, this.fontSize);
@@ -85,7 +85,8 @@ public class NotesAppPanel extends AnimatedPanel implements ActionListener {
 	public void updateUserInput() {
 		System.out.println("called");
 		if (this.italics) {
-			this.fontFormat = Font.ITALIC;
+			System.out.println("reached");
+			// this.userInput.fontFormat = Font.ITALIC;
 			italicsFormatButton.setBackground(Color.PINK);
 		}
 		if (this.bold) {
@@ -143,6 +144,7 @@ public class NotesAppPanel extends AnimatedPanel implements ActionListener {
 			JOptionPane.showMessageDialog(accessButton, accessDate);
 		}
 		if (e.getSource() == italicsFormatButton) {
+			System.out.println("italics btn clicked");
 			this.italics = !this.italics;
 			if (this.italics) {
 				italicsFormatButton.setBackground(Color.PINK);
