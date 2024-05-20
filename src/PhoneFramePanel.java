@@ -1,14 +1,14 @@
 import java.awt.Color;
+import java.time.*;
 import java.awt.Graphics;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-
 import javax.imageio.ImageIO;
 
-public class PhoneFramePanel extends AnimatedPanel implements MouseListener {
-	
+public class PhoneFramePanel extends AnimatedPanel implements MouseListener {	
+
 	// To set bounds of the frame
 		public static final int SCREEN_WIDTH = 220;
 		public static final int SCREEN_HEIGHT = 335;
@@ -23,7 +23,7 @@ public class PhoneFramePanel extends AnimatedPanel implements MouseListener {
 		private static final int SCREEN_PANEL = 0;
 		private static final int WALLPAPER_PANEL = 1;
 		private static final int NOTES_PANEL = 2;
-		
+
 		// constants for apps
 		private int xDistanceBetweenApps = 10;
 		private int yDistanceBetweenApps = 15;
@@ -33,6 +33,9 @@ public class PhoneFramePanel extends AnimatedPanel implements MouseListener {
 		// Set up array of AnimatedPanels for each screen along with int for the current screen
 		private AnimatedPanel[] screens;
 		private int currentPanel = 0;
+		
+		// Clock
+		private LocalDateTime localDateTime;
 		
 		// Boolean values to indicate whether an app is clicked on
 		private boolean appClicked; 
@@ -64,7 +67,7 @@ public class PhoneFramePanel extends AnimatedPanel implements MouseListener {
 
         // The animation will start on the main thread.
         // Do nothing in the UI thread
-    }
+    }	
 	
 	/**
 	 * Takes a homescreenpanel that has been put in a list of AnimatedPanels and returns it as a HomeScreenPanel
@@ -74,14 +77,16 @@ public class PhoneFramePanel extends AnimatedPanel implements MouseListener {
 	private HomeScreenPanel getPanel(AnimatedPanel home) {
 		return (HomeScreenPanel) home;
 	}
+
 	/**
 	 * 
 	 * @param An integer that represents the wallpaper value
 	 */
+
 	private void setWallpaper(int i) {
 		getPanel(screens[SCREEN_PANEL]).setWallpaper(i);
 	}
-	
+
 	private void createPanel() {
 		for (AnimatedPanel screen : screens) {
 	        screen.setBounds(SCREEN_DISTANCE_X, SCREEN_DISTANCE_Y, SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -89,6 +94,7 @@ public class PhoneFramePanel extends AnimatedPanel implements MouseListener {
 	        screen.setVisible(false);
 	        screen.setOpaque(false);
 		 }
+
 		//this.currentPanel = SCREEN_PANEL;
 		 screens[currentPanel].setVisible(true);
 		 
@@ -96,9 +102,13 @@ public class PhoneFramePanel extends AnimatedPanel implements MouseListener {
 	     //this.setVisible(true);
 		 this.addMouseListener(this);
 	}
-	
-	
-	
+
+	private String getTime() {
+		this.localDateTime = LocalDateTime.now();
+		LocalTime currentTime = localDateTime.toLocalTime();
+		return (currentTime+"").substring(0,5);
+	}
+
 	private void loadImages() {
         File imX = new File("src/Images/IPhone.png");
         try {
@@ -107,20 +117,22 @@ public class PhoneFramePanel extends AnimatedPanel implements MouseListener {
             System.out.println(imX.getAbsolutePath());
         }
     }
-	
+
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		g.drawImage(homeScreenImage, 0, 0, this);
 		g.setColor(Color.BLACK);
 		g.fillRect(BAR_DISTANCE_X, BAR_DISTANCE_Y, BAR_WIDTH, BAR_HEIGHT);
+		g.setColor(Color.WHITE);
+		g.drawString(getTime(), BAR_DISTANCE_X+2, BAR_DISTANCE_Y+BAR_HEIGHT-1);
 	}
 	
 	@Override
 	public void updateAnimation() {
 		screens[currentPanel].updateAnimation();
 	}
-
+	
 	public boolean insideHomeButton (int x, int y) {
 		double circle_x = 126.5;
 		double circle_y = 414.5;
@@ -129,13 +141,13 @@ public class PhoneFramePanel extends AnimatedPanel implements MouseListener {
 		double distance = Math.sqrt(true_x + true_y);
 		return distance <= 20.2;
 	}
-	
 
 	public void switchApp(int panel) {
 		screens[currentPanel].setVisible(false);
 		this.currentPanel = panel;
 		screens[currentPanel].setVisible(true);
 	}
+
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		int x = e.getX();
@@ -144,9 +156,11 @@ public class PhoneFramePanel extends AnimatedPanel implements MouseListener {
 			if (appClicked) {
 				changeScreen(currentPanel);
 			}
+
 			this.appClicked = false;
 			switchApp(0);
 		} 
+
 		else if (!(insideApps(x,y)== 0) && !appClicked) {
 			this.appClicked = true;
 			System.out.println("app clicked");
@@ -159,14 +173,12 @@ public class PhoneFramePanel extends AnimatedPanel implements MouseListener {
 		}
 	}
 
-	
 	private void changeScreen(int currentPanel) {
 		if(currentPanel == WALLPAPER_PANEL) {
 			Wallpaper object = (Wallpaper) screens[WALLPAPER_PANEL];
 			HomeScreenPanel home = (HomeScreenPanel) screens[SCREEN_PANEL];
 			home.setWallpaper(object.getWallpaper());
 		}
-		
 	}
 
 	private int insideApps(int x, int y) {
@@ -175,7 +187,6 @@ public class PhoneFramePanel extends AnimatedPanel implements MouseListener {
 			for (int i = (xDistanceBetweenApps + SCREEN_DISTANCE_X); i < SCREEN_WIDTH; i+= (xBoundApp+xDistanceBetweenApps)) {
 				currentApp++;
 				if ((i < x && (i + xBoundApp) > x) && (j < y && (j + yBoundApp) > y)) {
-					
 					return currentApp;
 				}
 			}
@@ -185,32 +196,25 @@ public class PhoneFramePanel extends AnimatedPanel implements MouseListener {
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
+		// TODO Auto-generated method stub	
 	}
-
+	
 	@Override
 	public void mouseEntered(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
 	}
-
+	
 	@Override
 	public void clickEvent(int x, int y) {
 		// TODO Auto-generated method stub
-		
 	}
-
-
 }
