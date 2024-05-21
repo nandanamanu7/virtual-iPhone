@@ -1,5 +1,5 @@
 
-public class HangManPanel extends AnimatedPanel{
+public class HangmanPanel extends AnimatedPanel{
 
 	@Override
 	public void updateAnimation() {

@@ -23,6 +23,9 @@ public class PhoneFramePanel extends AnimatedPanel implements MouseListener {
 		private static final int SCREEN_PANEL = 0;
 		private static final int WALLPAPER_PANEL = 1;
 		private static final int NOTES_PANEL = 2;
+		private static final int SETTINGS_PANEL = 3;
+		private static final int CLOCK_PANEL = 4;
+		private static final int HANGMAN_PANEL = 5;
 
 		// constants for apps
 		private int xDistanceBetweenApps = 10;
@@ -45,10 +48,13 @@ public class PhoneFramePanel extends AnimatedPanel implements MouseListener {
 		
 	public PhoneFramePanel() {
 		this.setLayout(null);
-		this.screens = new AnimatedPanel[3];
+		this.screens = new AnimatedPanel[6];
 		this.screens[SCREEN_PANEL] = new HomeScreenPanel();
 		this.screens[WALLPAPER_PANEL] = new Wallpaper();
 		this.screens[NOTES_PANEL] = new NotesAppPanel();
+		this.screens[SETTINGS_PANEL] = new SettingsPanel();
+		this.screens[CLOCK_PANEL] = new HomeScreenPanel();
+		this.screens[HANGMAN_PANEL] = new HangmanPanel();
 		//this.screens[TICTACTOE_PANEL] = new TicTacToePanel();
 		loadImages();
 		createPanel();
@@ -125,7 +131,7 @@ public class PhoneFramePanel extends AnimatedPanel implements MouseListener {
 		g.setColor(Color.BLACK);
 		g.fillRect(BAR_DISTANCE_X, BAR_DISTANCE_Y, BAR_WIDTH, BAR_HEIGHT);
 		g.setColor(Color.WHITE);
-		g.drawString(getTime(), BAR_DISTANCE_X+2, BAR_DISTANCE_Y+BAR_HEIGHT-1);
+		g.drawString(getTime(), BAR_DISTANCE_X+2, BAR_DISTANCE_Y+BAR_HEIGHT-2);
 	}
 	
 	@Override
