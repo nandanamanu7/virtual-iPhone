@@ -10,6 +10,7 @@ public class Wallpaper extends AnimatedPanel{
 	// To eliminate a warning showing in Eclipse
 	private static final long serialVersionUID = 1L;
 	
+	//Images
 	private BufferedImage backgroundImage;
 	private BufferedImage[] wallpapers;
 	private int currentWallpaper = 0;
