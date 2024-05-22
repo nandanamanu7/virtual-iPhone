@@ -4,8 +4,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
 import java.time.*;
 
@@ -138,7 +137,20 @@ public class NotesAppPanel extends AnimatedPanel implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == saveButton) {
 			 String text = userInput.getText();
-			// File newTextFile = new File()
+			 try {
+				 String fileName = JOptionPane.showInputDialog("Name your note");
+				 String filePath = "src/Notes/"+fileName;
+				 File newTextFile = new File("src/Notes/"+fileName);
+		         newTextFile.createNewFile();
+		         FileWriter newWriter = new FileWriter(newTextFile.getAbsolutePath());
+		         newWriter.write(text);
+		         newWriter.close();
+		         JOptionPane.showMessageDialog(saveButton, "file saved");
+			 }
+			 catch (Exception ex) {
+				 System.out.println(ex);
+			 }
+			 //File newTextFile = new File(text);
 			 System.out.println(text);
 		}
 		else if (e.getSource() == accessButton) {
