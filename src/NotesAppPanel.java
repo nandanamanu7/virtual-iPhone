@@ -86,18 +86,20 @@ public class NotesAppPanel extends AnimatedPanel implements ActionListener {
 		System.out.println("called");
 		if (this.italics) {
 			System.out.println("reached");
-			// this.userInput.fontFormat = Font.ITALIC;
+			this.fontFormat = Font.ITALIC;
 			italicsFormatButton.setBackground(Color.PINK);
 		}
-		if (this.bold) {
+		else if (this.bold) {
 			this.fontFormat = Font.BOLD;
 			boldFormatButton.setBackground(Color.PINK);
 		}
 		else {
+			System.out.println("else");
 			this.fontFormat = 0;
 			italicsFormatButton.setBackground(Color.WHITE);
 			boldFormatButton.setBackground(Color.WHITE);
 		}
+		System.out.println("reached end");
 		Font font = new Font(this.textFont, this.fontFormat, this.fontSize);
 	    userInput.setFont(font);
 	}
@@ -139,11 +141,11 @@ public class NotesAppPanel extends AnimatedPanel implements ActionListener {
 			// File newTextFile = new File()
 			 System.out.println(text);
 		}
-		if (e.getSource() == accessButton) {
+		else if (e.getSource() == accessButton) {
 			String accessDate = JOptionPane.showInputDialog("Note Date");
 			JOptionPane.showMessageDialog(accessButton, accessDate);
 		}
-		if (e.getSource() == italicsFormatButton) {
+		else if (e.getSource() == italicsFormatButton) {
 			System.out.println("italics btn clicked");
 			this.italics = !this.italics;
 			if (this.italics) {
@@ -151,7 +153,7 @@ public class NotesAppPanel extends AnimatedPanel implements ActionListener {
 			}
 			updateUserInput();
 		}
-		if (e.getSource() == boldFormatButton) {
+		else if (e.getSource() == boldFormatButton) {
 			System.out.println("btn clicked");
 			this.bold = !this.bold;
 			if (this.bold) {
@@ -159,6 +161,11 @@ public class NotesAppPanel extends AnimatedPanel implements ActionListener {
 			}
 			updateUserInput();
 		}
+		else {
+			return;
+		}
 	}
 	
 }
+
+
