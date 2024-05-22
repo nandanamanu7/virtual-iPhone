@@ -1,10 +1,4 @@
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.*;
-
-import javax.imageio.ImageIO;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 
@@ -59,12 +53,12 @@ public class MainFrame extends JFrame {
 	     }
 	 }
 
-	 private void showPanel(int index) {
+	 /*private void showPanel(int index) {
 	        System.out.printf("Show Panel. Thread is: %s\n", Thread.currentThread().getName());
 	        
 	        MainFrame.done = true;
 
-	    }
+	    }*/
 	 
 	 public void startAnimation() {
 		 MainFrame.done = false;

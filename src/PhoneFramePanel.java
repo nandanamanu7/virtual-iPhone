@@ -8,6 +8,8 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 public class PhoneFramePanel extends AnimatedPanel implements MouseListener {	
+	// To eliminate a warning showing in Eclipse
+	private static final long serialVersionUID = 1L;
 
 	// To set bounds of the frame
 		public static final int SCREEN_WIDTH = 220;
@@ -61,7 +63,7 @@ public class PhoneFramePanel extends AnimatedPanel implements MouseListener {
 		this.appClicked = false;
 	}
 	
-	private void showPanel(int index) {
+	/*private void showPanel(int index) {
         System.out.printf("Show Panel. Thread is: %s\n", Thread.currentThread().getName());
 
         // hide the current panel
@@ -73,25 +75,9 @@ public class PhoneFramePanel extends AnimatedPanel implements MouseListener {
 
         // The animation will start on the main thread.
         // Do nothing in the UI thread
-    }	
+    }	*/
 	
-	/**
-	 * Takes a homescreenpanel that has been put in a list of AnimatedPanels and returns it as a HomeScreenPanel
-	 * @param An AnimatedPanel that represents a HomeScreenPanel
-	 * @return A HomeScreenPanel
-	 */
-	private HomeScreenPanel getPanel(AnimatedPanel home) {
-		return (HomeScreenPanel) home;
-	}
-
-	/**
-	 * 
-	 * @param An integer that represents the wallpaper value
-	 */
-
-	private void setWallpaper(int i) {
-		getPanel(screens[SCREEN_PANEL]).setWallpaper(i);
-	}
+	
 
 	private void createPanel() {
 		for (AnimatedPanel screen : screens) {
