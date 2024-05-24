@@ -7,7 +7,7 @@ import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 
-public class PhoneFramePanel extends AnimatedPanel implements MouseListener {	
+public class PhoneFramePanel extends AnimatedPanel implements MouseListener, KeyListener{	
 	// To eliminate a warning showing in Eclipse
 	private static final long serialVersionUID = 1L;
 
@@ -85,7 +85,9 @@ public class PhoneFramePanel extends AnimatedPanel implements MouseListener {
 	        add(screen);
 	        screen.setVisible(false);
 	        screen.setOpaque(false);
+	        
 		 }
+		
 
 		//this.currentPanel = SCREEN_PANEL;
 		 screens[currentPanel].setVisible(true);
@@ -93,6 +95,12 @@ public class PhoneFramePanel extends AnimatedPanel implements MouseListener {
 	     // Set the current frame and this JFrame to be visible
 	     //this.setVisible(true);
 		 this.addMouseListener(this);
+		// Make the panel focusable and request focus
+	        setFocusable(true);
+	        requestFocusInWindow();
+
+	        // Add the KeyListener
+	        addKeyListener(this);
 	}
 
 	private String getTime() {
@@ -208,5 +216,27 @@ public class PhoneFramePanel extends AnimatedPanel implements MouseListener {
 	@Override
 	public void clickEvent(int x, int y) {
 		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		
+		
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		System.out.println("keyListener works");
+		String key =  Character.toString(e.getKeyCode());
+		if (this.currentPanel == HANGMAN_PANEL) {
+			HangmanPanel hangman = (HangmanPanel) this.screens[HANGMAN_PANEL];
+			hangman.keyEvent(key);
+		}
+		
 	}
 }
