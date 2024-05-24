@@ -1,6 +1,4 @@
 import java.awt.Graphics;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -8,7 +6,8 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 public class HomeScreenPanel extends AnimatedPanel{
-	
+	// To eliminate a warning showing in Eclipse
+	private static final long serialVersionUID = 1L;
 	
 	private BufferedImage wallpaper;
 	private BufferedImage[] wallpapers;
@@ -76,7 +75,6 @@ public class HomeScreenPanel extends AnimatedPanel{
 		g.drawImage(wallpaper, 0, 0, this);
 		int row = 1;
 		int col = 1;
-		int newRow = 0;
 		for (BufferedImage app : apps) {
 			int imgX = (row*xDistanceBetweenApps) + ((row-1)*xBoundApp);
 			int imgY = (col*yDistanceBetweenApps) + ((col-1)*yBoundApp);

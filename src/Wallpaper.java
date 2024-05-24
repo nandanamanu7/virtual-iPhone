@@ -1,7 +1,5 @@
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -9,7 +7,10 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 public class Wallpaper extends AnimatedPanel{
+	// To eliminate a warning showing in Eclipse
+	private static final long serialVersionUID = 1L;
 	
+	//Images
 	private BufferedImage backgroundImage;
 	private BufferedImage[] wallpapers;
 	private int currentWallpaper = 0;
