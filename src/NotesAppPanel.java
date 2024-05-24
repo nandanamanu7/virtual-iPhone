@@ -5,6 +5,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 import java.time.*;
 
@@ -38,6 +41,8 @@ public class NotesAppPanel extends AnimatedPanel implements ActionListener {
 	private boolean italics;
 	private boolean bold;
 	
+	
+	// Research java rich text file for formatting and research JFileCooser for the file display for access old notes!
 	
 	public NotesAppPanel() {
 		// Creates a new GridBagLayout so we can manage the layout/position of our JTextField
@@ -107,15 +112,19 @@ public class NotesAppPanel extends AnimatedPanel implements ActionListener {
 		// TODO Auto-generated method stub
 		this.saveButton = new JButton("Save Note");                                     
 		this.saveButton.addActionListener(this);
+		saveButton.setBackground(Color.WHITE);
 	    add(this.saveButton);
 	    this.accessButton = new JButton("Access old notes");                                     
 		this.accessButton.addActionListener(this);
+		accessButton.setBackground(Color.WHITE);
 	    add(this.accessButton);
 	    this.italicsFormatButton = new JButton("Italics");                                     
 		this.italicsFormatButton.addActionListener(this);
+		italicsFormatButton.setBackground(Color.WHITE);
 	    add(this.italicsFormatButton);
 	    this.boldFormatButton = new JButton("Bold");                                     
 		this.boldFormatButton.addActionListener(this);
+		boldFormatButton.setBackground(Color.WHITE);
 	    add(this.boldFormatButton);
 	}
 
@@ -139,13 +148,19 @@ public class NotesAppPanel extends AnimatedPanel implements ActionListener {
 			 String text = userInput.getText();
 			 try {
 				 String fileName = JOptionPane.showInputDialog("Name your note");
-				 String filePath = "src/Notes/"+fileName;
-				 File newTextFile = new File("src/Notes/"+fileName);
-		         newTextFile.createNewFile();
-		         FileWriter newWriter = new FileWriter(newTextFile.getAbsolutePath());
-		         newWriter.write(text);
-		         newWriter.close();
-		         JOptionPane.showMessageDialog(saveButton, "file saved");
+				 Path filePath = Paths.get("src/Notes/"+fileName);
+				 if (Files.exists(filePath)) {
+					 //System.out.println("File exists");
+			         JOptionPane.showMessageDialog(saveButton, "File already exists! Select another file name");
+				 }
+				 else {
+					 File newTextFile = new File("src/Notes/"+fileName);
+			         newTextFile.createNewFile();
+			         FileWriter newWriter = new FileWriter(newTextFile.getAbsolutePath());
+			         newWriter.write(text);
+			         newWriter.close();
+			         JOptionPane.showMessageDialog(saveButton, "file saved");
+				 }
 			 }
 			 catch (Exception ex) {
 				 System.out.println(ex);
