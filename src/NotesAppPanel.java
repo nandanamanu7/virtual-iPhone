@@ -24,13 +24,13 @@ public class NotesAppPanel extends AnimatedPanel implements ActionListener {
 	private JButton accessButton;
 	private Clock systemClock;
 	
-	private int textFieldDistanceFromX = 50;
-	private int textFieldDistanceFromY = 50;
+	private int textFieldDistanceFromX = 150;
+	private int textFieldDistanceFromY = 150;
 	private int textFieldXBound = 200;
 	private int textFieldYBound = 150;
 
-	private String textFont = "serif";
-	private int fontSize = 20;
+	private String textFont = "arial";
+	private int fontSize = 15;
 	private int fontFormat = 0;
 
 	// Format Buttons
@@ -45,8 +45,6 @@ public class NotesAppPanel extends AnimatedPanel implements ActionListener {
 	// Research java rich text file for formatting and research JFileCooser for the file display for access old notes!
 	
 	public NotesAppPanel() {
-		// Creates a new GridBagLayout so we can manage the layout/position of our JTextField
-		new GridBagLayout();
 		loadImages();
 		loadTextField();
 		loadButtons();
@@ -81,7 +79,8 @@ public class NotesAppPanel extends AnimatedPanel implements ActionListener {
 		userInput.setBackground(Color.PINK);
 	    Font font = new Font(this.textFont, this.fontFormat, this.fontSize);
 	    userInput.setFont(font);
-		this.userInput.setBounds(textFieldDistanceFromX, textFieldDistanceFromY, textFieldXBound, textFieldYBound);
+	    userInput.setLayout(null);
+		this.userInput.setLocation(this.textFieldDistanceFromX, this.textFieldDistanceFromY);
 		this.userInput.setPreferredSize(new Dimension(textFieldXBound, textFieldYBound));
 		add(this.userInput);
 	}
@@ -169,8 +168,17 @@ public class NotesAppPanel extends AnimatedPanel implements ActionListener {
 			 System.out.println(text);
 		}
 		else if (e.getSource() == accessButton) {
-			String accessDate = JOptionPane.showInputDialog("Note Date");
-			JOptionPane.showMessageDialog(accessButton, accessDate);
+			JFileChooser j = new JFileChooser(new File("src/Notes"));
+			// Open the save dialog
+			j.showSaveDialog(null);
+			String selectedFile = j.getSelectedFile().getAbsolutePath();
+			try {
+				String fileContent = readFile(selectedFile);
+				JOptionPane.showMessageDialog(accessButton, fileContent, j.getSelectedFile().getName(), -1);
+			}
+			catch (Exception ex) {
+				System.out.println(ex);
+			}
 		}
 		else if (e.getSource() == italicsFormatButton) {
 			System.out.println("italics btn clicked");
@@ -191,6 +199,19 @@ public class NotesAppPanel extends AnimatedPanel implements ActionListener {
 		else {
 			return;
 		}
+	}
+
+	// This code utilizes aid from a stack overflow thread 
+	private String readFile(String filePath) throws FileNotFoundException {
+		    File file = new File(filePath);
+		    StringBuilder fileContents = new StringBuilder((int)file.length());        
+
+		    try (Scanner scanner = new Scanner(file)) {
+		        while(scanner.hasNextLine()) {
+		            fileContents.append(scanner.nextLine() + System.lineSeparator());
+		        }
+		        return fileContents.toString();
+		    }
 	}
 	
 }
