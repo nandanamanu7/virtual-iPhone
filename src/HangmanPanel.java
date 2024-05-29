@@ -193,13 +193,7 @@ public class HangmanPanel extends AnimatedPanel{
 			if (letter.equals(key)) {
 
 				this.setVisible[index] = true;
-<<<<<<< HEAD
 				System.out.println("hangman");
-=======
-
-				System.out.println("hangman");
-
->>>>>>> branch 'main' of https://github.com/nandanamanu7/virtual-iPhone.git
 			}
 
 			index++;
