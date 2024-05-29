@@ -96,6 +96,7 @@ public class HangmanPanel extends AnimatedPanel{
 		for (String letter : this.word) {
 			if (letter.equals(key)) {
 				this.setVisible[index] = true;
+				System.out.println("hangman");
 			}
 			index++;
 		}
