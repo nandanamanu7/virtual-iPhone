@@ -33,12 +33,14 @@ public class NotesAppPanel extends AnimatedPanel implements ActionListener {
 	private int textFieldYBound = 150;
 
 	private String textFont = "arial";
-	private int fontSize = 15;
+	private int fontSize = 10;
 	private int fontFormat = 0;
 
 	// Format Buttons
 	private JButton italicsFormatButton;
 	private JButton boldFormatButton;
+	private JButton increaseFontSizeButton;
+	private JButton decreaseFontSizeButton;
 
 	// Boolean values for font format
 	private boolean italics;
@@ -83,9 +85,9 @@ public class NotesAppPanel extends AnimatedPanel implements ActionListener {
 	    Font font = new Font(this.textFont, this.fontFormat, this.fontSize);
 	    userInput.setFont(font);
 	    userInput.setLayout(null);
-		this.userInput.setLocation(this.textFieldDistanceFromX, this.textFieldDistanceFromY);
-		this.userInput.setPreferredSize(new Dimension(textFieldXBound, textFieldYBound));
-		add(this.userInput);
+		userInput.setBounds(this.textFieldDistanceFromX, this.textFieldDistanceFromY, textFieldXBound, textFieldYBound);
+		userInput.setPreferredSize(new Dimension(textFieldXBound, textFieldYBound));
+		add(userInput);
 	}
 	
 	public void updateUserInput() {
@@ -128,6 +130,14 @@ public class NotesAppPanel extends AnimatedPanel implements ActionListener {
 		this.boldFormatButton.addActionListener(this);
 		boldFormatButton.setBackground(Color.WHITE);
 	    add(this.boldFormatButton);
+	    this.increaseFontSizeButton = new JButton("Font +");                                     
+		this.increaseFontSizeButton.addActionListener(this);
+		increaseFontSizeButton.setBackground(Color.WHITE);
+	    add(this.increaseFontSizeButton);
+	    this.decreaseFontSizeButton = new JButton("Font -");                                     
+		this.decreaseFontSizeButton.addActionListener(this);
+		decreaseFontSizeButton.setBackground(Color.WHITE);
+	    add(this.decreaseFontSizeButton);
 	}
 
 
@@ -151,7 +161,10 @@ public class NotesAppPanel extends AnimatedPanel implements ActionListener {
 			 try {
 				 String fileName = JOptionPane.showInputDialog("Name your note");
 				 Path filePath = Paths.get("src/Notes/"+fileName);
-				 if (Files.exists(filePath)) {
+				 if (fileName.equals("")) {
+			         JOptionPane.showMessageDialog(saveButton, "Please enter a name for the file!");
+				 }
+				 else if (Files.exists(filePath)) {
 					 //System.out.println("File exists");
 			         JOptionPane.showMessageDialog(saveButton, "File already exists! Select another file name");
 				 }
@@ -162,6 +175,7 @@ public class NotesAppPanel extends AnimatedPanel implements ActionListener {
 			         newWriter.write(text);
 			         newWriter.close();
 			         JOptionPane.showMessageDialog(saveButton, "file saved");
+					 userInput.setText("");
 				 }
 			 }
 			 catch (Exception ex) {
@@ -174,10 +188,11 @@ public class NotesAppPanel extends AnimatedPanel implements ActionListener {
 			JFileChooser j = new JFileChooser(new File("src/Notes"));
 			// Open the save dialog
 			j.showSaveDialog(null);
-			String selectedFile = j.getSelectedFile().getAbsolutePath();
 			try {
+				String selectedFile = j.getSelectedFile().getAbsolutePath();
 				String fileContent = readFile(selectedFile);
-				JOptionPane.showMessageDialog(accessButton, fileContent, j.getSelectedFile().getName(), -1);
+				//JOptionPane.showMessageDialog(accessButton, fileContent, j.getSelectedFile().getName(), -1);
+				userInput.setText(fileContent);
 			}
 			catch (Exception ex) {
 				System.out.println(ex);
@@ -197,6 +212,14 @@ public class NotesAppPanel extends AnimatedPanel implements ActionListener {
 			if (this.bold) {
 				boldFormatButton.setBackground(Color.PINK);
 			}
+			updateUserInput();
+		}
+		else if (e.getSource() == increaseFontSizeButton) {
+			this.fontSize += 5;
+			updateUserInput();
+		}
+		else if (e.getSource() == decreaseFontSizeButton) {
+			this.fontSize -= 5;
 			updateUserInput();
 		}
 		else {
