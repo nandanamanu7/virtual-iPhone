@@ -21,6 +21,7 @@ public class HangmanPanel extends AnimatedPanel{
 	// Words List
 	private String[][] wordsList;
 	private String[] word;
+	private Boolean[] setVisible;
 	
 	public HangmanPanel() {
 		setupVars();
@@ -57,9 +58,13 @@ public class HangmanPanel extends AnimatedPanel{
 		this.displayLevel = 0;
 		this.currentLevel = new BufferedImage[9];
 		this.word = new String[5];
+		this.setVisible = new Boolean[5];
 	}
 	
 	public void loadWordList() {
+		for (int i = 0; i < 5; i++) {
+			this.setVisible[i] = false;
+		}
 		this.wordsList = new String[100][5];
 		int currentWord = 0;
 		int currentLetter = 0;
@@ -90,8 +95,9 @@ public class HangmanPanel extends AnimatedPanel{
 		int index = 0;
 		for (String letter : this.word) {
 			if (letter.equals(key)) {
-				System.out.println("gj");
+				this.setVisible[index] = true;
 			}
+			index++;
 		}
 	}
 	
