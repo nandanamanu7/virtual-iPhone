@@ -16,6 +16,9 @@ import javax.swing.*;
 import javax.swing.text.SimpleAttributeSet;
 
 public class NotesAppPanel extends AnimatedPanel implements ActionListener {
+	// To eliminate a warning showing in Eclipse
+	private static final long serialVersionUID = 1L;
+
 	private BufferedImage backgroundImage;
 	
 	// GUI Components
