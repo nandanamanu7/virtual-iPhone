@@ -152,7 +152,13 @@ public class HangmanPanel extends AnimatedPanel{
 
 	@Override
 	public void clickEvent(int x, int y) {
-		// TODO Auto-generated method stub	
+		if (this.gameOver) {
+			if (x >= 50 && x <= 170) {
+				if (y >= 225 && y <= 275) {
+					this.gameOver = false;
+				}
+			}
+		}
 	}
 
 	public String[] tokenize(String exampleWord) {
