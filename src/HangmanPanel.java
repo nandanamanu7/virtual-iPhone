@@ -14,11 +14,13 @@ public class HangmanPanel extends AnimatedPanel{
 	// Images
 	private BufferedImage backgroundImage;
 	private BufferedImage[] currentLevel;
-	private BufferedImage gameOverScreen;
+	private BufferedImage gameOverWinScreen;
+	private BufferedImage gameOverLoseScreen;
 	
 	//variables
 	private int displayLevel;
 	private boolean gameOver;
+	private boolean won;
 	private int xFontDistance;
 	private int yFontDistance;
 	private int fontSpace;
@@ -39,15 +41,18 @@ public class HangmanPanel extends AnimatedPanel{
 
 	public void loadImages() {
 		//Background Image
-		File gameScreen = new File("src/Images/HangmanApp/HangmanGameOver.png");
+		File loseScreen = new File("src/Images/HangmanApp/HangmanGameOverLose.png");
+		File winScreen = new File("src/Images/HangmanApp/HangmanGameOverWin.png");
 		File background = new File("src/Images/HangmanApp/HangmanBackground.png");
 		try {
 			//Background Image
-			this.gameOverScreen = ImageIO.read(gameScreen);
+			this.gameOverLoseScreen = ImageIO.read(loseScreen);
+			this.gameOverWinScreen = ImageIO.read(winScreen);
 			this.backgroundImage = ImageIO.read(background);
 		} catch (IOException e) {
 			//Background Image
-			System.out.println(gameScreen.getAbsolutePath());
+			System.out.println(loseScreen.getAbsolutePath());
+			System.out.println(winScreen.getAbsolutePath());
 			System.out.println(background.getAbsolutePath());
 		}
 	}
@@ -68,6 +73,7 @@ public class HangmanPanel extends AnimatedPanel{
 		this.yFontDistance = 195;
 		this.fontSpace = 43;
 		this.gameOver = false;
+		this.won = true;
 		this.displayLevel = 0;
 		this.currentLevel = new BufferedImage[9];
 		this.word = new String[5];
@@ -101,26 +107,42 @@ public class HangmanPanel extends AnimatedPanel{
 		this.word = this.wordsList[randomChoice];
 	}
 
+	public void setInvis() {
+		for (int i = 0; i < 5; i++) {
+			this.setVisible[i] = false;
+		}
+	}
+	
 	public void keyEvent(String key) {
 		if(!this.gameOver) {
 			System.out.println("Word: "+Arrays.toString(this.word));
 			key = key.toLowerCase();
 			boolean nextStage = true;
+			boolean win = true;
 			int index = 0;
 			for (String letter : this.word) {
 				if (letter.equals(key)) {
 					this.setVisible[index] = true;
 					nextStage = false;
-					System.out.println("hangman");
 				}
 				index++;
+			}
+			for (boolean check : this.setVisible) {
+				if (!check) {
+					win = false;
+				}
+			}
+			if (win) {
+				this.won = win;
+				this.gameOver = true;
 			}
 			if (nextStage) {
 				this.displayLevel++;
 				if (this.displayLevel == 8) {
 					this.gameOver = true;
+					this.won = false;
 				}
-			}
+			} 
 		}
 	}
 
@@ -135,12 +157,15 @@ public class HangmanPanel extends AnimatedPanel{
 			for(Boolean display : this.setVisible) {
 				if(display) {
 					g.drawString(this.word[index], this.xFontDistance + this.fontSpace * index, this.yFontDistance);
-					System.out.print(this.word[index]);
 				}
 				index++;
 			}
 		} else {
-			g.drawImage(this.gameOverScreen, 0, 0, this);
+			if (this.won) {
+				g.drawImage(this.gameOverWinScreen, 0, 0, this);
+			} else {
+				g.drawImage(this.gameOverLoseScreen, 0, 0, this);
+			}
 		}
 		
 	}
@@ -155,7 +180,11 @@ public class HangmanPanel extends AnimatedPanel{
 		if (this.gameOver) {
 			if (x >= 50 && x <= 170) {
 				if (y >= 225 && y <= 275) {
+					this.won = false;
 					this.gameOver = false;
+					this.displayLevel = 0;
+					chooseNewWord();
+					setInvis();
 				}
 			}
 		}
