@@ -2,7 +2,8 @@ import java.awt.*;
 
 
 public class SettingsPanel extends AnimatedPanel{
-	
+	// To eliminate a warning showing in Eclipse
+	private static final long serialVersionUID = 1L;
 	
 	public SettingsPanel() {
 		

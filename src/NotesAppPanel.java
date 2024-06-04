@@ -20,13 +20,11 @@ public class NotesAppPanel extends AnimatedPanel implements ActionListener {
 	private static final long serialVersionUID = 1L;
 
 	private BufferedImage backgroundImage;
-	
 	// GUI Components
 	private JTextPane userInput;
 	private JButton saveButton;
 	private JButton accessButton;
 	private Clock systemClock;
-	
 	private int textFieldDistanceFromX = 150;
 	private int textFieldDistanceFromY = 150;
 	private int textFieldXBound = 200;
@@ -45,10 +43,7 @@ public class NotesAppPanel extends AnimatedPanel implements ActionListener {
 	// Boolean values for font format
 	private boolean italics;
 	private boolean bold;
-	
-	
 	// Research java rich text file for formatting and research JFileCooser for the file display for access old notes!
-	
 	public NotesAppPanel() {
 		loadImages();
 		loadTextField();
@@ -63,7 +58,6 @@ public class NotesAppPanel extends AnimatedPanel implements ActionListener {
 	            System.out.println(background.getAbsolutePath());
 	      }
 	}
-	
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
@@ -73,7 +67,6 @@ public class NotesAppPanel extends AnimatedPanel implements ActionListener {
 	@Override
 	public void updateAnimation() {
 		// TODO Auto-generated method stub
-		
 	}
 
 
@@ -90,7 +83,6 @@ public class NotesAppPanel extends AnimatedPanel implements ActionListener {
         this.add(new JScrollPane(userInput)); 
 		add(userInput);
 	}
-	
 	public void updateUserInput() {
 		if (this.italics && !this.bold) {
 			this.fontFormat = 0;
@@ -114,7 +106,6 @@ public class NotesAppPanel extends AnimatedPanel implements ActionListener {
 		Font font = new Font(this.textFont, this.fontFormat, this.fontSize);
 	    userInput.setFont(font);
 	}
-	
 	private void loadButtons() {
 		// TODO Auto-generated method stub
 		this.saveButton = new JButton("Save Note");                                     
@@ -147,7 +138,6 @@ public class NotesAppPanel extends AnimatedPanel implements ActionListener {
 	@Override
 	public void clickEvent(int x, int y) {
 		// TODO Auto-generated method stub
-		
 	}
 
 	public String getDate() {
@@ -155,8 +145,6 @@ public class NotesAppPanel extends AnimatedPanel implements ActionListener {
 		String currentDate = ("" + systemClock.instant()).substring(0,10);
 		return currentDate;
 	}
-	
-	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == saveButton) {
@@ -249,7 +237,4 @@ public class NotesAppPanel extends AnimatedPanel implements ActionListener {
 		        return fileContents.toString();
 		    }
 	}
-	
 }
-
-

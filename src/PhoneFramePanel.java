@@ -126,6 +126,7 @@ public class PhoneFramePanel extends AnimatedPanel implements MouseListener, Key
 		g.fillRect(BAR_DISTANCE_X, BAR_DISTANCE_Y, BAR_WIDTH, BAR_HEIGHT);
 		g.setColor(Color.WHITE);
 		g.drawString(getTime(), BAR_DISTANCE_X+2, BAR_DISTANCE_Y+BAR_HEIGHT-2);
+		g.drawString("5G", BAR_WIDTH-2, BAR_DISTANCE_Y+BAR_HEIGHT-2);
 	}
 	
 	@Override
