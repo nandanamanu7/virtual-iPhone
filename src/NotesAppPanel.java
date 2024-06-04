@@ -87,27 +87,30 @@ public class NotesAppPanel extends AnimatedPanel implements ActionListener {
 	    userInput.setLayout(null);
 		userInput.setBounds(this.textFieldDistanceFromX, this.textFieldDistanceFromY, textFieldXBound, textFieldYBound);
 		userInput.setPreferredSize(new Dimension(textFieldXBound, textFieldYBound));
+        this.add(new JScrollPane(userInput)); 
 		add(userInput);
 	}
 	
 	public void updateUserInput() {
-		System.out.println("called");
-		if (this.italics) {
-			System.out.println("reached");
+		if (this.italics && !this.bold) {
+			this.fontFormat = 0;
 			this.fontFormat = Font.ITALIC;
 			italicsFormatButton.setBackground(Color.PINK);
+			boldFormatButton.setBackground(Color.WHITE);
 		}
-		else if (this.bold) {
+		else if (this.bold && !this.italics) {
+			this.fontFormat = 0;
 			this.fontFormat = Font.BOLD;
+			italicsFormatButton.setBackground(Color.WHITE);
 			boldFormatButton.setBackground(Color.PINK);
 		}
 		else {
-			System.out.println("else");
 			this.fontFormat = 0;
 			italicsFormatButton.setBackground(Color.WHITE);
 			boldFormatButton.setBackground(Color.WHITE);
 		}
-		System.out.println("reached end");
+		//this.italics = false;
+		//this.bold
 		Font font = new Font(this.textFont, this.fontFormat, this.fontSize);
 	    userInput.setFont(font);
 	}
@@ -200,7 +203,9 @@ public class NotesAppPanel extends AnimatedPanel implements ActionListener {
 		}
 		else if (e.getSource() == italicsFormatButton) {
 			System.out.println("italics btn clicked");
-			this.italics = !this.italics;
+			if(!this.bold) {
+				this.italics = !this.italics;
+			}
 			if (this.italics) {
 				italicsFormatButton.setBackground(Color.PINK);
 			}
@@ -208,7 +213,9 @@ public class NotesAppPanel extends AnimatedPanel implements ActionListener {
 		}
 		else if (e.getSource() == boldFormatButton) {
 			System.out.println("btn clicked");
-			this.bold = !this.bold;
+			if (!this.italics) {
+				this.bold = !this.bold;
+			}
 			if (this.bold) {
 				boldFormatButton.setBackground(Color.PINK);
 			}
@@ -220,6 +227,9 @@ public class NotesAppPanel extends AnimatedPanel implements ActionListener {
 		}
 		else if (e.getSource() == decreaseFontSizeButton) {
 			this.fontSize -= 5;
+			if (this.fontSize <= 0) {
+				JOptionPane.showMessageDialog(accessButton, "Font is size 0!", "Minimum font size reached", 2);
+			}
 			updateUserInput();
 		}
 		else {
