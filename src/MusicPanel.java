@@ -19,6 +19,7 @@ public class MusicPanel extends AnimatedPanel implements ActionListener {
 	
 	// JButtons and other GUI components
 	private JButton selectButton;
+	private JButton playButton;
 	
 	private JFileChooser j = new JFileChooser("src/music");    
 	
@@ -66,11 +67,11 @@ public class MusicPanel extends AnimatedPanel implements ActionListener {
 		selectButton.setBackground(Color.PINK);
 		selectButton.setBounds(SCREEN_DISTANCE_X, (335/3), 200, 50);
 	    add(this.selectButton);
-	    selectButton = new JButton("Select music");                                     
-		selectButton.addActionListener(this);
-		selectButton.setIcon(this.PlayButton);
-		selectButton.setBounds(SCREEN_DISTANCE_X, (335/3), 200, 50);
-	    add(this.selectButton);
+	    playButton = new JButton("");
+	    playButton.addActionListener(this);
+		playButton.setBackground(Color.PINK);
+		playButton.setBounds(SCREEN_DISTANCE_X, (335/3), 200, 50);
+	    //add(this.playButton);
 	}
 
 	
@@ -84,22 +85,10 @@ public class MusicPanel extends AnimatedPanel implements ActionListener {
 	        if (result == JFileChooser.APPROVE_OPTION) 
 	        {
 	            File selectedFile = j.getSelectedFile();
-	            this.currentFile = selectedFile.getName();
+	            this.currentFile = selectedFile.getAbsolutePath();
+	            playMusic();
 	        }
 	    }
-//			JFileChooser j = new JFileChooser(new File("src/music"));
-//			// Open the save dialog
-//			j.showSaveDialog(null);
-//			try {
-//				String selectedFile = j.getSelectedFile().getAbsolutePath();
-//		        j.setFileFilter(new FileNameExtensionFilter("WAV Files", "wav"));
-//		        this.currentFile = j.getSelectedFile().getName();
-//		        JOptionPane.showMessageDialog(selectButton, j.getSelectedFile().getName(), j.getSelectedFile().getName(), -1);
-////			}
-//			catch (Exception ex) {
-//				System.out.println(ex);
-//			}
-	
 		else {
 			return;
 		}
@@ -115,13 +104,12 @@ public class MusicPanel extends AnimatedPanel implements ActionListener {
 	        try 
 	        {
 				File file = new File(currentFile);
+				
 	            AudioInputStream audioIn = AudioSystem.getAudioInputStream(file);
 	            
 	            clip = AudioSystem.getClip();
 	            clip.open(audioIn);
-	            
 	            clip.start();
-	 
 	        }
 	        catch(Exception e)
 	        {
