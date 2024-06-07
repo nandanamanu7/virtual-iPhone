@@ -26,7 +26,7 @@ public class PhoneFramePanel extends AnimatedPanel implements MouseListener, Key
 		private static final int WALLPAPER_PANEL = 1;
 		private static final int NOTES_PANEL = 2;
 		private static final int SETTINGS_PANEL = 3;
-		private static final int CLOCK_PANEL = 4;
+		private static final int MUSIC_PANEL = 4;
 		private static final int HANGMAN_PANEL = 5;
 
 		// constants for apps
@@ -34,6 +34,7 @@ public class PhoneFramePanel extends AnimatedPanel implements MouseListener, Key
 		private int yDistanceBetweenApps = 15;
 		private int xBoundApp = 60;
 		private int yBoundApp = 70;
+		private boolean inverted = false;
 
 		// Set up array of AnimatedPanels for each screen along with int for the current screen
 		private AnimatedPanel[] screens;
@@ -47,6 +48,8 @@ public class PhoneFramePanel extends AnimatedPanel implements MouseListener, Key
 	
 	// Images
 	private BufferedImage homeScreenImage;
+	private BufferedImage databar;
+	private BufferedImage databarInverted;
 		
 	public PhoneFramePanel() {
 		this.setLayout(null);
@@ -55,7 +58,7 @@ public class PhoneFramePanel extends AnimatedPanel implements MouseListener, Key
 		this.screens[WALLPAPER_PANEL] = new Wallpaper();
 		this.screens[NOTES_PANEL] = new NotesAppPanel();
 		this.screens[SETTINGS_PANEL] = new SettingsPanel();
-		this.screens[CLOCK_PANEL] = new HomeScreenPanel();
+		this.screens[MUSIC_PANEL] = new MusicPanel();
 		this.screens[HANGMAN_PANEL] = new HangmanPanel();
 		//this.screens[TICTACTOE_PANEL] = new TicTacToePanel();
 		loadImages();
@@ -111,22 +114,40 @@ public class PhoneFramePanel extends AnimatedPanel implements MouseListener, Key
 
 	private void loadImages() {
         File imX = new File("src/Images/IPhone.png");
+        File data = new File("src/Images/Databar.png");
+        File dataInvert = new File("src/Images/DatabarInvert.png");
         try {
             this.homeScreenImage = ImageIO.read(imX);
+            this.databar = ImageIO.read(data);
+            this.databarInverted = ImageIO.read(dataInvert);
         } catch (IOException e) {
             System.out.println(imX.getAbsolutePath());
+            System.out.println(data.getAbsolutePath());
+            System.out.println(dataInvert.getAbsolutePath());
         }
+        
     }
 
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		g.drawImage(homeScreenImage, 0, 0, this);
-		g.setColor(Color.BLACK);
+		if(this.inverted) {
+			g.setColor(Color.WHITE);
+		} else {
+			g.setColor(Color.BLACK);
+		}
 		g.fillRect(BAR_DISTANCE_X, BAR_DISTANCE_Y, BAR_WIDTH, BAR_HEIGHT);
-		g.setColor(Color.WHITE);
+		if(this.inverted) {
+			g.setColor(Color.BLACK);
+			g.drawImage(this.databarInverted, BAR_WIDTH-5, BAR_DISTANCE_Y, this);
+		} else {
+			g.setColor(Color.WHITE);
+			g.drawImage(this.databar, BAR_WIDTH-5, BAR_DISTANCE_Y, this);
+		}
 		g.drawString(getTime(), BAR_DISTANCE_X+2, BAR_DISTANCE_Y+BAR_HEIGHT-2);
-		g.drawString("5G", BAR_WIDTH-2, BAR_DISTANCE_Y+BAR_HEIGHT-2);
+		g.drawString("5G", BAR_WIDTH-20, BAR_DISTANCE_Y+BAR_HEIGHT-2);
+		
 	}
 	
 	@Override
