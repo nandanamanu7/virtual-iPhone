@@ -34,7 +34,10 @@ public class PhoneFramePanel extends AnimatedPanel implements MouseListener, Key
 		private int yDistanceBetweenApps = 15;
 		private int xBoundApp = 60;
 		private int yBoundApp = 70;
-		private boolean inverted = false;
+		private int timeOffset;
+		private boolean inverted;
+		private boolean AMERICAN;
+		private Color barColor;
 
 		// Set up array of AnimatedPanels for each screen along with int for the current screen
 		private AnimatedPanel[] screens;
@@ -53,6 +56,11 @@ public class PhoneFramePanel extends AnimatedPanel implements MouseListener, Key
 		
 	public PhoneFramePanel() {
 		this.setLayout(null);
+		this.timeOffset = 0;
+		this.AMERICAN = false;
+		this.inverted = false;
+		this.timeOffset = 0;
+		this.barColor = Color.BLACK;
 		this.screens = new AnimatedPanel[6];
 		this.screens[SCREEN_PANEL] = new HomeScreenPanel();
 		this.screens[WALLPAPER_PANEL] = new Wallpaper();
@@ -109,7 +117,27 @@ public class PhoneFramePanel extends AnimatedPanel implements MouseListener, Key
 	private String getTime() {
 		this.localDateTime = LocalDateTime.now();
 		LocalTime currentTime = localDateTime.toLocalTime();
-		return (currentTime+"").substring(0,5);
+		int hours = Integer.parseInt((currentTime+"").substring(0,2));
+		hours += this.timeOffset;
+		while (hours > 23) {
+			hours -= 24;
+		} 
+		while (hours < 0) {
+			hours += 24;
+		}
+		String america = " AM";
+		if(this.AMERICAN && hours > 11) {
+			america = " PM";
+			hours -= 12;
+		}
+		if(!this.AMERICAN) {
+			america = "";
+		}
+		String extra = "0";
+		if (hours > 10) {
+			extra = "";
+		}
+		return extra+hours+(currentTime+"").substring(2,5)+america;
 	}
 
 	private void loadImages() {
@@ -133,9 +161,9 @@ public class PhoneFramePanel extends AnimatedPanel implements MouseListener, Key
 		super.paintComponent(g);
 		g.drawImage(homeScreenImage, 0, 0, this);
 		if(this.inverted) {
-			g.setColor(Color.WHITE);
+			g.setColor(invertColor(this.barColor));
 		} else {
-			g.setColor(Color.BLACK);
+			g.setColor(this.barColor);
 		}
 		g.fillRect(BAR_DISTANCE_X, BAR_DISTANCE_Y, BAR_WIDTH, BAR_HEIGHT);
 		if(this.inverted) {
@@ -150,9 +178,21 @@ public class PhoneFramePanel extends AnimatedPanel implements MouseListener, Key
 		
 	}
 	
+	private Color invertColor(Color color) {
+        int invertedRed = 255 - color.getRed();
+        int invertedGreen = 255 - color.getGreen();
+        int invertedBlue = 255 - color.getBlue();
+        return new Color(invertedRed, invertedGreen, invertedBlue);
+    } 
+	
 	@Override
 	public void updateAnimation() {
 		screens[currentPanel].updateAnimation();
+		SettingsPanel update = (SettingsPanel)screens[SETTINGS_PANEL];
+		this.inverted = update.getInverted();
+		this.timeOffset = update.getTimeOffset();
+		this.barColor = update.getBarColor();
+		this.AMERICAN = update.getTimeSystem();
 	}
 	
 	public boolean insideHomeButton (int x, int y) {

@@ -46,7 +46,6 @@ public class MainFrame extends JFrame {
 		 phoneFrame.setVisible(true);
 		 this.setVisible(true);
 		 
-
 	     // tell the main thread that we are done creating our stuff
 	     synchronized (semaphore) {
 	         semaphore.notify();
