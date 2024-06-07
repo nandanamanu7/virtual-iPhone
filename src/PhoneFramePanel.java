@@ -167,10 +167,10 @@ public class PhoneFramePanel extends AnimatedPanel implements MouseListener, Key
 		}
 		g.fillRect(BAR_DISTANCE_X, BAR_DISTANCE_Y, BAR_WIDTH, BAR_HEIGHT);
 		if(this.inverted) {
-			g.setColor(Color.BLACK);
+			g.setColor(this.barColor);
 			g.drawImage(this.databarInverted, BAR_WIDTH-5, BAR_DISTANCE_Y, this);
 		} else {
-			g.setColor(Color.WHITE);
+			g.setColor(invertColor(this.barColor));
 			g.drawImage(this.databar, BAR_WIDTH-5, BAR_DISTANCE_Y, this);
 		}
 		g.drawString(getTime(), BAR_DISTANCE_X+2, BAR_DISTANCE_Y+BAR_HEIGHT-2);
