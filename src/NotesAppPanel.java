@@ -45,6 +45,7 @@ public class NotesAppPanel extends AnimatedPanel implements ActionListener {
 	private boolean bold;
 	// Research java rich text file for formatting and research JFileCooser for the file display for access old notes!
 	public NotesAppPanel() {
+		//setLayout(null);
 		loadImages();
 		loadTextField();
 		loadButtons();
@@ -77,7 +78,7 @@ public class NotesAppPanel extends AnimatedPanel implements ActionListener {
 		userInput.setBackground(Color.PINK);
 	    Font font = new Font(this.textFont, this.fontFormat, this.fontSize);
 	    userInput.setFont(font);
-	    userInput.setLayout(null);
+	    //userInput.setLayout(null);
 		userInput.setBounds(this.textFieldDistanceFromX, this.textFieldDistanceFromY, textFieldXBound, textFieldYBound);
 		userInput.setPreferredSize(new Dimension(textFieldXBound, textFieldYBound));
         this.add(new JScrollPane(userInput)); 
