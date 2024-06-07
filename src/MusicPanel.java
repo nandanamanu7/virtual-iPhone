@@ -20,6 +20,7 @@ public class MusicPanel extends AnimatedPanel implements ActionListener {
 	// JButtons and other GUI components
 	private JButton selectButton;
 	private JButton playButton;
+	private JButton stopButton;
 	
 	private JFileChooser j = new JFileChooser("src/music");    
 	
@@ -67,11 +68,16 @@ public class MusicPanel extends AnimatedPanel implements ActionListener {
 		selectButton.setBackground(Color.PINK);
 		selectButton.setBounds(SCREEN_DISTANCE_X, (335/3), 200, 50);
 	    add(this.selectButton);
-	    playButton = new JButton("");
+	    playButton = new JButton("Play");
 	    playButton.addActionListener(this);
-		playButton.setBackground(Color.PINK);
-		playButton.setBounds(SCREEN_DISTANCE_X, (335/3), 200, 50);
-	    //add(this.playButton);
+		playButton.setBackground(Color.GREEN);
+		playButton.setBounds(SCREEN_DISTANCE_X +80, (335/2), 75, 50);
+	    add(this.playButton);
+		stopButton = new JButton("Stop");
+	    stopButton.addActionListener(this);
+		stopButton.setBackground(Color.RED);
+		stopButton.setBounds(SCREEN_DISTANCE_X, (335/2), 75, 50);
+	    add(this.stopButton);
 	}
 
 	
@@ -88,6 +94,12 @@ public class MusicPanel extends AnimatedPanel implements ActionListener {
 	            this.currentFile = selectedFile.getAbsolutePath();
 	            playMusic();
 	        }
+	    }
+		if (e.getSource() == stopButton) {
+			stopPlaying();
+	    }
+		if (e.getSource() == playButton) {
+			resumePlaying();
 	    }
 		else {
 			return;
@@ -117,6 +129,20 @@ public class MusicPanel extends AnimatedPanel implements ActionListener {
 	        }
 	        
 	    }
+	  
+	  private void stopPlaying() {
+		  if (clip != null && clip.isRunning()) 
+	        {
+	            clip.stop();
+	        }
+	  }
+	  
+	  private void resumePlaying() {
+		  if (clip != null && !clip.isRunning()) 
+	        {
+	            clip.start();
+	        }
+	  }
 	  
 	@Override
 	public void clickEvent(int x, int y) {
