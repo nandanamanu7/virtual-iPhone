@@ -134,7 +134,7 @@ public class PhoneFramePanel extends AnimatedPanel implements MouseListener, Key
 			america = "";
 		}
 		String extra = "0";
-		if (hours > 10) {
+		if (hours >= 10) {
 			extra = "";
 		}
 		return extra+hours+(currentTime+"").substring(2,5)+america;

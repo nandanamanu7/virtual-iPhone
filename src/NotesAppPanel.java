@@ -152,7 +152,7 @@ public class NotesAppPanel extends AnimatedPanel implements ActionListener {
 			 String text = userInput.getText();
 			 try {
 				 String fileName = JOptionPane.showInputDialog("Name your note");
-				 Path filePath = Paths.get("src/Notes/"+fileName);
+				 Path filePath = Paths.get("src/Notes/"+fileName+".txt");
 				 if (fileName.equals("")) {
 			         JOptionPane.showMessageDialog(saveButton, "Please enter a name for the file!");
 				 }
@@ -161,7 +161,7 @@ public class NotesAppPanel extends AnimatedPanel implements ActionListener {
 			         JOptionPane.showMessageDialog(saveButton, "File already exists! Select another file name");
 				 }
 				 else {
-					 File newTextFile = new File("src/Notes/"+fileName);
+					 File newTextFile = new File("src/Notes/"+fileName+".txt");
 			         newTextFile.createNewFile();
 			         FileWriter newWriter = new FileWriter(newTextFile.getAbsolutePath());
 			         newWriter.write(text);
